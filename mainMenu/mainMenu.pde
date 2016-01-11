@@ -1,12 +1,12 @@
-int state; //0=Main Menu; 1=Stage Select; 2=Char Select
+int state; //0=Main Menu; 1=Play/Stage Select; 2=Stat Record; 3=Character Select
 PFont font;
 int fontsize = 20;
-txtButton but1;
-txtButton but2;
-txtButton but3;
+txtButton[] butts0 = new txtButton[3];
+txtButton[] butts1 = new txtButton[11];
 
 void setup() {
-  size(640,480);
+  //size(640,480);
+  size(1280,960);
   colorMode(HSB);
   state = 0;
   color buttonNormal = color(15,150,180);
@@ -14,27 +14,49 @@ void setup() {
   background(190,80,40);
   noStroke();
   font = createFont("Arial",16,true);
-  but1 = new txtButton(width/5,height/3+10*height/48,"Play",fontsize,buttonNormal,buttonHover);
-  but2 = new txtButton(width/5,height/3+15*height/48,"Stage Select",fontsize,buttonNormal,buttonHover);
-  but3 = new txtButton(width/5,height/3+20*height/48,"Exit",fontsize,buttonNormal,buttonHover);
+  butts0[0] = new txtButton(width/5,height/3+10*height/48,"Play",fontsize,buttonNormal,buttonHover);
+  butts0[1] = new txtButton(width/5,height/3+15*height/48,"Records",fontsize,buttonNormal,buttonHover);
+  butts0[2] = new txtButton(width/5,height/3+20*height/48,"Exit",fontsize,buttonNormal,buttonHover);
+  butts1[0] = new txtButton(width/10,height-height/10,"Back",fontsize,buttonNormal,buttonHover);
+  for(int i=1;i<butts1.length;i++){
+    if(i<10){
+      butts1[i] = new txtButton(i*width/6,(i/6)*height/4,"0"+i,fontsize,buttonNormal,buttonHover);
+    }else{
+     butts1[i] = new txtButton(i*width/6,(i/6)*height/4,"0"+i,fontsize,buttonNormal,buttonHover); 
+    }
+  }
 }
 
 void draw() {
   textAlign(LEFT,BOTTOM);
-  fill(10,200,180);
-  textFont(font,48);
-  text("GO TO HELL",width/5,height/3);
-  but1.draw();
-  but2.draw();
-  but3.draw();
-  //text("Play1",width/5,height/3+10*height/48);
+  if(state==0){
+    fill(10,200,180);
+    textFont(font,48);
+    text("GO TO HELL",width/5,height/3);
+    butts0[0].draw();
+    butts0[1].draw();
+    butts0[2].draw();
+  }else if(state==1){
+    background(190,80,40);
+    fill(10,200,180);
+    textFont(font,36);
+    textAlign(CENTER,BOTTOM);
+    text("Stage Select",width/2,height/5);
+    for(int i=0;i<butts1.length;i++){
+      butts1[i].draw();
+    }
+  }
 }
  void mousePressed(){
- if (but1.over == true){
-  println("clicked play"); 
- }else if (but2.over == true){
-  println("clicked stage select"); 
- }else if (but3.over == true){
-  exit(); 
- }
+   if(state==0){
+     if (butts0[0].over == true){
+       state=1;
+       println("clicked play"); 
+     }else if (butts0[1].over == true){
+       state=2;
+       println("clicked Records"); 
+     }else if (butts0[2].over == true){
+       exit(); 
+     }
+   }
 }
