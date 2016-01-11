@@ -1,3 +1,4 @@
+int state; //0=Main Menu; 1=Stage Select; 2=Char Select
 PFont font;
 int fontsize = 20;
 txtButton but1;
@@ -7,6 +8,7 @@ txtButton but3;
 void setup() {
   size(640,480);
   colorMode(HSB);
+  state = 0;
   color buttonNormal = color(15,150,180);
   color buttonHover = color(10,200,200);
   background(190,80,40);
