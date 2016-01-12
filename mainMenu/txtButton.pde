@@ -17,6 +17,7 @@ class txtButton{
  
  void draw(){
    //colorMode(HSB);
+   textAlign(LEFT,BOTTOM);
    textSize(size);
    over();
    if (over){

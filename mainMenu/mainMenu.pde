@@ -5,8 +5,8 @@ txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
 
 void setup() {
-  //size(640,480);
-  size(1280,960);
+  size(640,480);
+  //size(1280,960);
   colorMode(HSB);
   state = 0;
   color buttonNormal = color(15,150,180);
@@ -20,9 +20,10 @@ void setup() {
   butts1[0] = new txtButton(width/10,height-height/10,"Back",fontsize,buttonNormal,buttonHover);
   for(int i=1;i<butts1.length;i++){
     if(i<10){
-      butts1[i] = new txtButton(i*width/6,(i/6)*height/4,"0"+i,fontsize,buttonNormal,buttonHover);
+      //butts1[i] = new txtButton((i/6)*i*width/6,(i/6)*height/4,"0"+i,fontsize,buttonNormal,buttonHover);
+      butts1[i] = new txtButton(i%5*width/6,((i/6)+1)*height*3/10,"0"+i,fontsize,buttonNormal,buttonHover);
     }else{
-     butts1[i] = new txtButton(i*width/6,(i/6)*height/4,"0"+i,fontsize,buttonNormal,buttonHover); 
+     butts1[i] = new txtButton(i%5*width/6,((i/6)+1)*height*3/10,""+i,fontsize,buttonNormal,buttonHover); 
     }
   }
 }
@@ -30,6 +31,7 @@ void setup() {
 void draw() {
   textAlign(LEFT,BOTTOM);
   if(state==0){
+    background(190,80,40);
     fill(10,200,180);
     textFont(font,48);
     text("GO TO HELL",width/5,height/3);
@@ -45,6 +47,8 @@ void draw() {
     for(int i=0;i<butts1.length;i++){
       butts1[i].draw();
     }
+    fill(255);
+    line(width/10,height-height/10,0,0);
   }
 }
  void mousePressed(){
@@ -58,5 +62,10 @@ void draw() {
      }else if (butts0[2].over == true){
        exit(); 
      }
+   }else if(state==1){
+     if (butts1[0].over == true){
+       state=0; 
+       println("Back");
+     }
    }
-}
+ }
