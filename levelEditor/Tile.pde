@@ -20,6 +20,8 @@ class Tile{
        col=color(340,20,20);
      }else if(type==3){
        col=color(25,120,85);
+     }else if(type==4){
+       col=color(5,180,85);
      }
    }else{
      hovered=this;
@@ -29,6 +31,8 @@ class Tile{
        col=color(340,20,80);
      }else if(type==3){
        col=color(25,120,145);
+     }else if(type==4){
+       col=color(5,180,145);
      }
    }
    fill(col);

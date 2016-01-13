@@ -1,4 +1,4 @@
-//Press numbers 0-2 to change tile type
+//Press numbers 0-4 to change tile type
 //Press z to toggle big brush mode
 
 static int current,tileSize;
@@ -60,6 +60,9 @@ void keyPressed(){
   }else if(key=='3'){
     current=3;
     msg="Breakable("+key+")";
+  }else if(key=='4'){
+    current=4;
+    msg="Damage("+key+")";
   }
   println(msg);
 }
