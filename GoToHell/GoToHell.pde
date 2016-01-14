@@ -1,12 +1,16 @@
-int state; //0=Main Menu; 1=Play/Stage Select; 2=Stat Record; 3=Character Select
+static int state,tileSize; //0=Main Menu; 1=Play/Stage Select; 2=Stat Record; 3=Character Select
+                           //11-20=stages 1-10
 PFont font;
 int fontsize = 20;
 txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
+Tile[] board;
+BufferedReader reader;
 
 void setup() {
   size(640,480);
   //size(1280,960);
+  tileSize = width/64;
   colorMode(HSB);
   state = 0;
   color buttonNormal = color(15,150,180);
@@ -28,6 +32,7 @@ void setup() {
      butts1[i] = new txtButton(5*width/6,((i/6)+1)*height*4/11,""+i,fontsize,buttonNormal,buttonHover); 
     }
   }
+  board = new Tile[64*48];
 }
 
 void draw() {
@@ -51,6 +56,17 @@ void draw() {
     }
     fill(255);
     line(width/10,height-height/10,0,0);
+  }else if(state>10 && state<21){
+    background(190,80,40);
+    if(state==11){
+      println("In stage 1");
+      board[0].draw();
+      for(int i=0;i<board.length;i++){
+        board[i].draw();
+        //println(board[i].toString());
+      }
+      //exit();
+    }
   }
 }
  void mousePressed(){
@@ -68,6 +84,16 @@ void draw() {
      if (butts1[0].over == true){
        state=0; 
        println("Back");
+     }else if (butts1[1].over == true){
+       state=11; 
+       println("Stage 1");
+       String[] lines = loadStrings("stage1.txt");
+       //println(lines);
+       String[] tileInfo;
+       for(int i=0;i<board.length;i++){
+         tileInfo = lines[i].split(",");
+         board[i] = new Tile(Integer.parseInt(tileInfo[0]),Integer.parseInt(tileInfo[1]),Integer.parseInt(tileInfo[2]));
+       }
      }
    }
  }
