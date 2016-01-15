@@ -1,12 +1,12 @@
-class txtButton{
- int x,y;
+class txtButton {
+ int x, y;
  String text;
  int size;
  color nColor;
  color overColor;
  boolean over;
  
- txtButton(int x,int y,String text,int size,color nc,color oc){
+ txtButton(int x, int y, String text, int size, color nc, color oc) {
    this.x = x;
    this.y = y;
    this.text = text;
@@ -16,23 +16,24 @@ class txtButton{
  }
  
  void draw(){
-   //colorMode(HSB);
-   textAlign(LEFT,BOTTOM);
+   // colorMode(HSB);
+   textAlign(LEFT, BOTTOM);
    textSize(size);
    over();
    if (over){
      fill(overColor);
-   }else{
+   }
+   else {
      fill(nColor);
    }
-   text(text,x,y);
+   text(text, x, y);
  }
  
  void over(){
-  if(mouseX>=x && mouseX<=x+textWidth(text)
-  && mouseY <= y && mouseY >= y-size){
+  if (mouseX >= x && mouseX <= x + textWidth(text) && mouseY <= y && mouseY >= y - size) {
    over = true; 
-  }else{
+  }
+  else {
    over = false; 
   }
  }
