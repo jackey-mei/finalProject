@@ -1,10 +1,10 @@
-class Saw {
- int xcor, ycor, damage, size; 
+class Saw{
+ int xcor,ycor,damage,size; 
  
- Saw(int x, int y, int damage, int size) {
-   xcor = x;
-   ycor = y;
-   this.damage = damage;
-   this.size = size;
+ void Saw(int x,int y,int damage,int size){
+   xcor=x;
+   ycor=y;
+   this.damage=damage;
+   this.size=size;
  }
 }
