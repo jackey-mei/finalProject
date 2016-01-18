@@ -7,6 +7,7 @@ txtButton[] butts1 = new txtButton[11];
 Tile[] board;
 BufferedReader reader;
 Character mainChar;
+char currentKey;
 
 void setup() {
   size(640, 480);
@@ -68,7 +69,12 @@ void draw() {
       }
       mainChar.draw();
       if (keyPressed) {
-        if (key == 'a') {
+        if (key=='a'){
+          currentKey='a';
+        }else if(key=='d'){
+          currentKey='d';
+        }
+        if (currentKey == 'a') {
           if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
             if (mainChar.xvelocity >= -1.3) {
               mainChar.xacceleration = -0.2;
@@ -92,7 +98,7 @@ void draw() {
             }
           }
         }
-        if (key == 'd') {
+        if (currentKey == 'd') {
           if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
             if (mainChar.xvelocity <= 1.3) {
               mainChar.xacceleration = 0.2;
@@ -160,7 +166,7 @@ void mousePressed() {
 }
 
 void keyReleased() {
-  if (key == 'd') {
+  if (key == 'd' && currentKey=='d') {
     if (mainChar.xvelocity >= 1.3) {
       mainChar.xacceleration = -0.2;
       mainChar.xrightSlowDown = true;
@@ -172,7 +178,7 @@ void keyReleased() {
       }
     }
   }
-  if (key == 'a') {
+  if (key == 'a' && currentKey=='a') {
     if (mainChar.xvelocity <= -1.3) {
       mainChar.xacceleration = 0.2;
       mainChar.xleftSlowDown = true;
