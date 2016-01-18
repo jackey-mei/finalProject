@@ -2,6 +2,7 @@ class Character {
   float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor, gravity;
   boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown;
   PShape square;
+  PImage sprite = loadImage("charspriteR.png");
   
   Character(float xvelocity, float xacceleration, float yvelocity, float yacceleration, float xcor, float ycor) {
     this.xvelocity = xvelocity;
@@ -19,7 +20,9 @@ class Character {
   }
   
   void draw() {
-    shape(square, xcor, ycor);
+    //shape(square, xcor, ycor);
+    //rect(xcor,ycor,10,15);
+    image(sprite,xcor,ycor);
     xvelocity += xacceleration;
     yvelocity += yacceleration;
     xcor += xvelocity;

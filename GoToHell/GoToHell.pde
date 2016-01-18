@@ -158,7 +158,7 @@ void mousePressed() {
         tileInfo = lines[i].split(",");
         board[i] = new Tile(Integer.parseInt(tileInfo[0]), Integer.parseInt(tileInfo[1]), Integer.parseInt(tileInfo[2]));
       }
-      mainChar = new Character(0, 0, 0, 0, 50, 120);
+      mainChar = new Character(0, 0, 0, 0, 50, 100);
     }
   }
 }
