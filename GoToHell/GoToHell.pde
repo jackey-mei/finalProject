@@ -71,7 +71,33 @@ void draw() {
         //println(board[i].toString());
       }
       mainChar.draw();
-      //exit();
+      if (keyPressed) {
+        if (key == 'a') {
+          if (mainChar.xvelocity >= -1.0) {
+            mainChar.xacceleration = -0.1;
+            mainChar.xstartUp = true;
+          }
+          else if (mainChar.xvelocity < -1.0) {
+            if (mainChar.xstartUp == true) {
+              mainChar.xacceleration = 0;
+              mainChar.xstartUp = false;
+            }
+          }
+        }
+        if (key == 'd') {
+          if (mainChar.xvelocity <= 1.0) {
+            mainChar.xacceleration = 0.1;
+            mainChar.xstartUp = true;
+          }
+          else if (mainChar.xvelocity > 1.0) {
+            if (mainChar.xstartUp == true) {
+              mainChar.xacceleration = 0;
+              mainChar.xstartUp = false;
+            }
+          }
+        }
+        println(mainChar.xvelocity);
+      }
     }
   }
 }
@@ -109,35 +135,7 @@ void mousePressed() {
      }
    }
  }
- 
- void keyPressed() {
-   if (key == 'd') {
-     if (mainChar.xvelocity <= 1.0) {
-       mainChar.xacceleration = 0.1;
-       mainChar.xstartUp = true;
-     }
-     else if (mainChar.xvelocity > 1.0) {
-       if (mainChar.xstartUp == true) {
-         mainChar.xacceleration = 0;
-         mainChar.xstartUp = false;
-       }
-     }
-   }
-   if (key == 'a') {
-     if (mainChar.xvelocity >= -1.0) {
-       mainChar.xacceleration = -0.1;
-       mainChar.xstartUp = true;
-     }
-     else if (mainChar.xvelocity < -1.0) {
-       if (mainChar.xstartUp == true) {
-         mainChar.xacceleration = 0;
-         mainChar.xstartUp = false;
-       }
-     }
-   }
-   println(mainChar.xvelocity);
- }
- 
+
  void keyReleased() {
    if (key == 'd') {
      if (mainChar.xvelocity >= 1.0) {

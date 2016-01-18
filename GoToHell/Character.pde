@@ -1,6 +1,5 @@
 class Character {
-  float xvelocity, xacceleration, yvelocity, yacceleration;
-  float xcor, ycor;
+  float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor;
   boolean xleftSlowDown, xrightSlowDown, xstartUp;
   PShape square;
   
