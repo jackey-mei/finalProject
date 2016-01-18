@@ -190,6 +190,7 @@ void keyReleased() {
   println(mainChar.xvelocity);
 }
 
+//takes pixel coordinates and returns the Tile on those coordinates
   Tile getTile(float x,float y){
    int xcor = (int)x/10;
    int ycor = (int)y/10;
