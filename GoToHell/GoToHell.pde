@@ -6,6 +6,7 @@ txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
 Tile[] board;
 BufferedReader reader;
+Character mainChar;
 
 void setup() {
   size(640, 480);
@@ -17,6 +18,7 @@ void setup() {
   color buttonHover = color(10, 200, 200);
   background(190, 80, 40);
   noStroke();
+  
   font = createFont("Arial", 16, true);
   butts0[0] = new txtButton(width / 5, height / 3 + 10 * height / 48, "Play", fontsize, buttonNormal, buttonHover);
   butts0[1] = new txtButton(width / 5, height / 3 + 15 * height / 48, "Records", fontsize, buttonNormal, buttonHover);
@@ -63,12 +65,12 @@ void draw() {
   else if (state > 10 && state < 21) {
     background(190, 80, 40);
     if (state == 11) {
-      println("In Stage 1");
       board[0].draw();
       for (int i = 0; i < board.length; i ++) {
         board[i].draw();
         //println(board[i].toString());
       }
+      mainChar.draw();
       //exit();
     }
   }
@@ -97,12 +99,36 @@ void mousePressed() {
        state = 11; 
        println("Stage 1");
        String[] lines = loadStrings("stage1.txt");
-       //println(lines);
+       // println(lines);
        String[] tileInfo;
        for (int i = 0; i < board.length; i ++) {
          tileInfo = lines[i].split(",");
          board[i] = new Tile(Integer.parseInt(tileInfo[0]), Integer.parseInt(tileInfo[1]), Integer.parseInt(tileInfo[2]));
        }
+       mainChar = new Character(0, 0, 0, 0, 50, 120);
      }
    }
  }
+ 
+ void keyPressed() {
+   if (key == 'd') {
+     if (mainChar.xvelocity <= 1.5) {
+       mainChar.xvelocity 
+     println(mainChar.xvelocity);
+   }
+ }
+ 
+ void keyReleased() {
+   if (key == 'd') {
+     if (mainChar.xvelocity > 1) {
+       mainChar.xacceleration = -0.1;
+       mainChar.xslowDown = true;
+     }
+     else {
+       mainChar.xvelocity = 0;
+       mainChar.xacceleration = 0;
+     }
+   }
+ }
+       
+       
