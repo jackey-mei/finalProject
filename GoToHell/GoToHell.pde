@@ -112,23 +112,58 @@ void mousePressed() {
  
  void keyPressed() {
    if (key == 'd') {
-     if (mainChar.xvelocity <= 1.5) {
-       mainChar.xvelocity 
-     println(mainChar.xvelocity);
+     if (mainChar.xvelocity <= 1.0) {
+       mainChar.xacceleration = 0.1;
+       mainChar.xstartUp = true;
+     }
+     else if (mainChar.xvelocity > 1.0) {
+       if (mainChar.xstartUp == true) {
+         mainChar.xacceleration = 0;
+         mainChar.xstartUp = false;
+       }
+     }
    }
+   if (key == 'a') {
+     if (mainChar.xvelocity >= -1.0) {
+       mainChar.xacceleration = -0.1;
+       mainChar.xstartUp = true;
+     }
+     else if (mainChar.xvelocity < -1.0) {
+       if (mainChar.xstartUp == true) {
+         mainChar.xacceleration = 0;
+         mainChar.xstartUp = false;
+       }
+     }
+   }
+   println(mainChar.xvelocity);
  }
  
  void keyReleased() {
    if (key == 'd') {
-     if (mainChar.xvelocity > 1) {
+     if (mainChar.xvelocity >= 1.0) {
        mainChar.xacceleration = -0.1;
-       mainChar.xslowDown = true;
+       mainChar.xrightSlowDown = true;
      }
-     else {
-       mainChar.xvelocity = 0;
-       mainChar.xacceleration = 0;
+     else if (mainChar.xvelocity < 1.0) {
+       if (mainChar.xrightSlowDown == false) {
+         mainChar.xvelocity = 0;
+         mainChar.xacceleration = 0;
+       }
      }
    }
+   if (key == 'a') {
+     if (mainChar.xvelocity <= -1.0) {
+       mainChar.xacceleration = 0.1;
+       mainChar.xleftSlowDown = true;
+     }
+     else if (mainChar.xvelocity > -1.0) {
+       if (mainChar.xleftSlowDown == false) {
+         mainChar.xvelocity = 0;
+         mainChar.xacceleration = 0;
+       }
+     }
+   }
+   println(mainChar.xvelocity);
  }
        
        
