@@ -1,6 +1,6 @@
 class Character {
-  float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor;
-  boolean xleftSlowDown, xrightSlowDown, xstartUp;
+  float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor, gravity;
+  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown;
   PShape square;
   
   Character(float xvelocity, float xacceleration, float yvelocity, float yacceleration, float xcor, float ycor) {
@@ -24,20 +24,26 @@ class Character {
     yvelocity += yacceleration;
     xcor += xvelocity;
     ycor += yvelocity;
-    if (mainChar.xrightSlowDown == true) {
-       if (mainChar.xvelocity <= 0) {
-         mainChar.xvelocity = 0;
-         mainChar.xacceleration = 0;
-         mainChar.xrightSlowDown = false;
+    if (xrightSlowDown == true) {
+       if (xvelocity <= 0) {
+         xvelocity = 0;
+         xacceleration = 0;
+         xrightSlowDown = false;
        }
      }
-     if (mainChar.xleftSlowDown == true) {
-       if (mainChar.xvelocity >= 0) {
-         mainChar.xvelocity = 0;
-         mainChar.xacceleration = 0;
-         mainChar.xleftSlowDown = false;
+     if (xleftSlowDown == true) {
+       if (xvelocity >= 0) {
+         xvelocity = 0;
+         xacceleration = 0;
+         xleftSlowDown = false;
        }
      }
+     if (yslowDown == true) {
+       if (yvelocity >= 1) {
+         yacceleration = 0;
+         yslowDown = false;
+       }
+     }   
   } 
 }
     
