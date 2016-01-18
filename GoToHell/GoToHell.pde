@@ -8,6 +8,9 @@ Tile[] board;
 BufferedReader reader;
 Character mainChar;
 char currentKey;
+color buttonNormal;
+color buttonHover;
+PImage mainmenu;
 
 void setup() {
   size(640, 480);
@@ -15,12 +18,12 @@ void setup() {
   tileSize = width / 64;
   colorMode(HSB);
   state = 0;
-  color buttonNormal = color(15, 150, 180);
-  color buttonHover = color(10, 200, 200);
+  buttonNormal = color(240, 127, 190);
+  buttonHover = color(248, 163, 230);
   background(190, 80, 40);
   noStroke();
-
-  font = createFont("Arial", 16, true);
+  mainmenu = loadImage("mainmenu.png");
+  font = createFont("Arial-Black", 16, true);
   butts0[0] = new txtButton(width / 5, height / 3 + 10 * height / 48, "Play", fontsize, buttonNormal, buttonHover);
   butts0[1] = new txtButton(width / 5, height / 3 + 15 * height / 48, "Records", fontsize, buttonNormal, buttonHover);
   butts0[2] = new txtButton(width / 5, height / 3 + 20 * height / 48, "Exit", fontsize, buttonNormal, buttonHover);
@@ -41,8 +44,8 @@ void setup() {
 void draw() {
   textAlign(LEFT, BOTTOM);
   if (state == 0) {
-    background(190, 80, 40);
-    fill(10, 200, 180);
+    background(mainmenu);
+    fill(buttonHover);
     textFont(font, 48);
     text("GO TO HELL", width / 5, height / 3);
     butts0[0].draw();
@@ -50,7 +53,7 @@ void draw() {
     butts0[2].draw();
   } else if (state == 1) {
     background(190, 80, 40);
-    fill(10, 200, 180);
+    fill(buttonHover);
     textFont(font, 36);
     textAlign(CENTER, BOTTOM);
     text("Stage Select", width / 2, height / 5);
