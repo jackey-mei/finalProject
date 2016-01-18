@@ -131,6 +131,7 @@ void draw() {
       }
     }
   }
+  println(getTile(mouseX,mouseY));
 }
 
 void mousePressed() {
@@ -188,3 +189,9 @@ void keyReleased() {
   }
   println(mainChar.xvelocity);
 }
+
+  Tile getTile(float x,float y){
+   int xcor = (int)x/10;
+   int ycor = (int)y/10;
+   return board[xcor+ycor*64];
+ }

@@ -36,5 +36,6 @@ class Tile {
  String toString() {
   return "(" + xcor + "," + ycor+ ")" + " " + type; 
  }
+ 
 }
  
