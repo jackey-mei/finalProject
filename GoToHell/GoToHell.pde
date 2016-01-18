@@ -69,12 +69,7 @@ void draw() {
       }
       mainChar.draw();
       if (keyPressed) {
-        if (key=='a'){
-          currentKey='a';
-        }else if(key=='d'){
-          currentKey='d';
-        }
-        if (currentKey == 'a') {
+        if (key == 'a') {
           if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
             if (mainChar.xvelocity >= -1.3) {
               mainChar.xacceleration = -0.2;
@@ -98,7 +93,7 @@ void draw() {
             }
           }
         }
-        if (currentKey == 'd') {
+        if (key == 'd') {
           if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
             if (mainChar.xvelocity <= 1.3) {
               mainChar.xacceleration = 0.2;
@@ -166,19 +161,18 @@ void mousePressed() {
 }
 
 void keyReleased() {
-  if (key == 'd' && currentKey=='d') {
+  if (key == 'd') {
     if (mainChar.xvelocity >= 1.3) {
       mainChar.xacceleration = -0.2;
       mainChar.xrightSlowDown = true;
-    } 
-    else if (mainChar.xvelocity < 1.3) {
+    } else if (mainChar.xvelocity < 1.3) {
       if (mainChar.xrightSlowDown == false) {
         mainChar.xvelocity = 0;
         mainChar.xacceleration = 0;
       }
     }
   }
-  if (key == 'a' && currentKey=='a') {
+  if (key == 'a') {
     if (mainChar.xvelocity <= -1.3) {
       mainChar.xacceleration = 0.2;
       mainChar.xleftSlowDown = true;
