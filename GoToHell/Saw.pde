@@ -14,10 +14,10 @@ class Saw{
  }
  
  boolean insideSaw(int x,int y){
-   return (double)rad>= Math.sqrt((double)(Math.pow(x-xcor,2)+Math.pow(y-ycor,2))) ||
-   (double)rad>= Math.sqrt((double)(Math.pow(x+20-xcor,2)+Math.pow(y-ycor,2))) ||
-   (double)rad>= Math.sqrt((double)(Math.pow(x-xcor,2)+Math.pow(y+30-ycor,2))) ||
-   (double)rad>= Math.sqrt((double)(Math.pow(x+20-xcor,2)+Math.pow(y+30-ycor,2)));
+   return (double)rad-3>= Math.sqrt((double)(Math.pow(x-xcor,2)+Math.pow(y-ycor,2))) ||
+   (double)rad-3>= Math.sqrt((double)(Math.pow(x+20-xcor,2)+Math.pow(y-ycor,2))) ||
+   (double)rad-3>= Math.sqrt((double)(Math.pow(x-xcor,2)+Math.pow(y+30-ycor,2))) ||
+   (double)rad-3>= Math.sqrt((double)(Math.pow(x+20-xcor,2)+Math.pow(y+30-ycor,2)));
  }
  
  void grow(){

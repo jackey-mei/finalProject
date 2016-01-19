@@ -13,6 +13,7 @@ color buttonHover;
 PImage mainmenu;
 Saw[] sawlist;
 Door[] doorlist = new Door[2];
+float speedLimit = 3.0;
 
 void setup() {
   size(640, 480);
@@ -79,6 +80,11 @@ void draw() {
           }
         }
         mainChar.draw();
+        /*
+        if(mainChar.xvelocity!=0.0){
+          println(mainChar.xvelocity+","+mainChar.xacceleration+","+(mainChar.xrightSlowDown||mainChar.xleftSlowDown));
+        }
+        */
         for (int i = 0; i < sawlist.length; i ++) {
           sawlist[i].draw();
           if(sawlist[i].insideSaw((int)mainChar.xcor,(int)mainChar.ycor)){
@@ -88,10 +94,10 @@ void draw() {
         if (keyPressed) {
           if (key == 'a') {
             if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-              if (mainChar.xvelocity >= -3.0) {
+              if (mainChar.xvelocity >= -speedLimit) {
                 mainChar.xacceleration = -0.2;
                 mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity < -3.0) {
+              } else if (mainChar.xvelocity < -speedLimit) {
                 if (mainChar.xstartUp == true) {
                   mainChar.xacceleration = 0;
                   mainChar.xstartUp = false;
@@ -99,10 +105,10 @@ void draw() {
               }
             }
             if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-              if (mainChar.xvelocity >= -3.0) {
+              if (mainChar.xvelocity >= -speedLimit) {
                 mainChar.xacceleration = -0.4;
                 mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity < -3.0) {
+              } else if (mainChar.xvelocity < -speedLimit) {
                 if (mainChar.xstartUp == true) {
                   mainChar.xacceleration = 0;
                   mainChar.xstartUp = false;
@@ -112,10 +118,10 @@ void draw() {
           }
           if (key == 'd') {
             if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-              if (mainChar.xvelocity <= 3.0) {
+              if (mainChar.xvelocity <= speedLimit) {
                 mainChar.xacceleration = 0.2;
                 mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity > 3.0) {
+              } else if (mainChar.xvelocity > speedLimit) {
                 if (mainChar.xstartUp == true) {
                   mainChar.xacceleration = 0;
                   mainChar.xstartUp = false;
@@ -123,10 +129,10 @@ void draw() {
               }
             }
             if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-              if (mainChar.xvelocity <= 3.0) {
+              if (mainChar.xvelocity <= speedLimit) {
                 mainChar.xacceleration = 0.4;
                 mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity > 3.0) {
+              } else if (mainChar.xvelocity > speedLimit) {
                 if (mainChar.xstartUp == true) {
                   mainChar.xacceleration = 0;
                   mainChar.xstartUp = false;
@@ -136,10 +142,18 @@ void draw() {
           }
           if (key == ' ') {
             if (mainChar.yvelocity == 0) {
-              mainChar.yvelocity = -3.0;
+              mainChar.yvelocity = -speedLimit-1;
               mainChar.yacceleration = 0.2;
               mainChar.yslowDown = true;
             }
+          }
+          
+          if(mainChar.xvelocity >= speedLimit){
+            mainChar.xvelocity = speedLimit;
+            mainChar.xacceleration = 0;
+          }else if(mainChar.xvelocity <= -speedLimit){
+            mainChar.xvelocity = -speedLimit;
+            mainChar.xacceleration = 0;
           }
           //println(mainChar.xvelocity);
         }
@@ -177,10 +191,10 @@ void mousePressed() {
 
 void keyReleased() {
   if (key == 'd') {
-    if (mainChar.xvelocity >= 3.0) {
+    if (mainChar.xvelocity >= speedLimit) {
       mainChar.xacceleration = -0.2;
       mainChar.xrightSlowDown = true;
-    } else if (mainChar.xvelocity < 3.0) {
+    } else if (mainChar.xvelocity < speedLimit) {
       if (mainChar.xrightSlowDown == false) {
         mainChar.xvelocity = 0;
         mainChar.xacceleration = 0;
@@ -188,10 +202,10 @@ void keyReleased() {
     }
   }
   if (key == 'a') {
-    if (mainChar.xvelocity <= -3.0) {
+    if (mainChar.xvelocity <= -speedLimit) {
       mainChar.xacceleration = 0.2;
       mainChar.xleftSlowDown = true;
-    } else if (mainChar.xvelocity > -3.0) {
+    } else if (mainChar.xvelocity > -speedLimit) {
       if (mainChar.xleftSlowDown == false) {
         mainChar.xvelocity = 0;
         mainChar.xacceleration = 0;
@@ -210,6 +224,7 @@ void keyReleased() {
  
  void setStage(int n){
    state = 10+n;
+   if(state != 21){
    println("Stage "+n);
    String[] lines = loadStrings("stage"+n+".txt");
    String[] tileInfo;
@@ -228,4 +243,5 @@ void keyReleased() {
      sawlist[i] = new Saw(Integer.parseInt(saw[0]),Integer.parseInt(saw[1]),Integer.parseInt(saw[2]),Integer.parseInt(saw[3]));
    }
    mainChar = new Character(0, 0, 0, 0, 50, 100);
+   }
  }

@@ -42,13 +42,13 @@ class Character {
        }
      }
      if (yslowDown == true) {
-       if (yvelocity >= 1) {
+       if (yvelocity >= 0) {
          yacceleration = 0;
          yslowDown = false;
        }
      }
      land();
-     //fall();
+     fall();
   }
   
   boolean standing(){
@@ -66,10 +66,9 @@ class Character {
   }
   
   void fall(){
-    if(!standing()){
-      mainChar.yvelocity = -3.0;
-      mainChar.yacceleration = 0.2;
-      mainChar.yslowDown = true;
+    if(!standing() && !mainChar.yslowDown){
+      mainChar.yvelocity = speedLimit/1.5;
+      mainChar.yacceleration = 0.3;
     }
   }
 }
