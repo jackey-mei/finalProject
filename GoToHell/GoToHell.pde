@@ -11,6 +11,8 @@ char currentKey;
 color buttonNormal;
 color buttonHover;
 PImage mainmenu;
+Saw[] sawlist;
+Door[] doorlist = new Door[2];
 
 void setup() {
   size(640, 480);
@@ -64,74 +66,89 @@ void draw() {
     line(width / 10, height - height / 10, 0, 0);
   } else if (state > 10 && state < 21) {
     background(190, 80, 40);
-    if (state == 11) {
-      board[0].draw();
-      for (int i = 0; i < board.length; i ++) {
-        board[i].draw();
-        //println(board[i].toString());
-      }
-      mainChar.draw();
-      if (keyPressed) {
-        if (key == 'a') {
-          if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-            if (mainChar.xvelocity >= -1.3) {
-              mainChar.xacceleration = -0.2;
-              mainChar.xstartUp = true;
-            } else if (mainChar.xvelocity < -1.3) {
-              if (mainChar.xstartUp == true) {
-                mainChar.xacceleration = 0;
-                mainChar.xstartUp = false;
-              }
-            }
-          }
-          if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-            if (mainChar.xvelocity >= -1.3) {
-              mainChar.xacceleration = -0.4;
-              mainChar.xstartUp = true;
-            } else if (mainChar.xvelocity < -1.3) {
-              if (mainChar.xstartUp == true) {
-                mainChar.xacceleration = 0;
-                mainChar.xstartUp = false;
-              }
-            }
+    for(int x=0;x<10;x++){
+      if (state == 11+x) {
+        for (int i = 0; i < board.length; i ++) {
+          board[i].draw();
+        }
+        for (int i = 0; i < doorlist.length; i ++) {
+          doorlist[i].draw();
+          if(doorlist[i].insideDoor((int)mainChar.xcor,(int)mainChar.ycor)){
+            setStage(state-10+1);
+            state+=1;
+            println("DOOR!!");
           }
         }
-        if (key == 'd') {
-          if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-            if (mainChar.xvelocity <= 1.3) {
-              mainChar.xacceleration = 0.2;
-              mainChar.xstartUp = true;
-            } else if (mainChar.xvelocity > 1.3) {
-              if (mainChar.xstartUp == true) {
-                mainChar.xacceleration = 0;
-                mainChar.xstartUp = false;
+        mainChar.draw();
+        for (int i = 0; i < sawlist.length; i ++) {
+          sawlist[i].draw();
+          if(sawlist[i].insideSaw((int)mainChar.xcor,(int)mainChar.ycor)){
+            println("HURT!!");
+          }
+        }
+        if (keyPressed) {
+          if (key == 'a') {
+            if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
+              if (mainChar.xvelocity >= -1.3) {
+                mainChar.xacceleration = -0.2;
+                mainChar.xstartUp = true;
+              } else if (mainChar.xvelocity < -1.3) {
+                if (mainChar.xstartUp == true) {
+                  mainChar.xacceleration = 0;
+                  mainChar.xstartUp = false;
+                }
+              }
+            }
+            if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
+              if (mainChar.xvelocity >= -1.3) {
+                mainChar.xacceleration = -0.4;
+                mainChar.xstartUp = true;
+              } else if (mainChar.xvelocity < -1.3) {
+                if (mainChar.xstartUp == true) {
+                  mainChar.xacceleration = 0;
+                  mainChar.xstartUp = false;
+                }
               }
             }
           }
-          if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-            if (mainChar.xvelocity <= 1.3) {
-              mainChar.xacceleration = 0.4;
-              mainChar.xstartUp = true;
-            } else if (mainChar.xvelocity > 1.3) {
-              if (mainChar.xstartUp == true) {
-                mainChar.xacceleration = 0;
-                mainChar.xstartUp = false;
+          if (key == 'd') {
+            if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
+              if (mainChar.xvelocity <= 1.3) {
+                mainChar.xacceleration = 0.2;
+                mainChar.xstartUp = true;
+              } else if (mainChar.xvelocity > 1.3) {
+                if (mainChar.xstartUp == true) {
+                  mainChar.xacceleration = 0;
+                  mainChar.xstartUp = false;
+                }
+              }
+            }
+            if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
+              if (mainChar.xvelocity <= 1.3) {
+                mainChar.xacceleration = 0.4;
+                mainChar.xstartUp = true;
+              } else if (mainChar.xvelocity > 1.3) {
+                if (mainChar.xstartUp == true) {
+                  mainChar.xacceleration = 0;
+                  mainChar.xstartUp = false;
+                }
               }
             }
           }
-        }
-        if (key == ' ') {
-          if (mainChar.yvelocity == 0) {
-            mainChar.yvelocity = -3.0;
-            mainChar.yacceleration = 0.2;
-            mainChar.yslowDown = true;
+          if (key == ' ') {
+            if (mainChar.yvelocity == 0) {
+              mainChar.yvelocity = -3.0;
+              mainChar.yacceleration = 0.2;
+              mainChar.yslowDown = true;
+            }
           }
+          //println(mainChar.xvelocity);
         }
-        println(mainChar.xvelocity);
       }
     }
+  }else if(state == 21){
+    state=1;
   }
-  println(getTile(mouseX,mouseY));
 }
 
 void mousePressed() {
@@ -149,17 +166,12 @@ void mousePressed() {
     if (butts1[0].over == true) {
       state = 0; 
       println("Back");
-    } else if (butts1[1].over == true) {
-      state = 11; 
-      println("Stage 1");
-      String[] lines = loadStrings("stage1.txt");
-      // println(lines);
-      String[] tileInfo;
-      for (int i = 0; i < board.length; i ++) {
-        tileInfo = lines[i].split(",");
-        board[i] = new Tile(Integer.parseInt(tileInfo[0]), Integer.parseInt(tileInfo[1]), Integer.parseInt(tileInfo[2]));
+    } else{
+      for(int n=1;n<butts1.length;n++){
+        if(butts1[n].over == true){
+          setStage(n);
+        }
       }
-      mainChar = new Character(0, 0, 0, 0, 50, 100);
     }
   }
 }
@@ -187,7 +199,7 @@ void keyReleased() {
       }
     }
   }
-  println(mainChar.xvelocity);
+  //println(mainChar.xvelocity);
 }
 
 //takes pixel coordinates and returns the Tile on those coordinates
@@ -195,4 +207,26 @@ void keyReleased() {
    int xcor = (int)x/10;
    int ycor = (int)y/10;
    return board[xcor+ycor*64];
+ }
+ 
+ void setStage(int n){
+   state = 10+n;
+   println("Stage "+n);
+   String[] lines = loadStrings("stage"+n+".txt");
+   String[] tileInfo;
+   for (int i = 0; i < board.length; i ++) {
+     tileInfo = lines[i].split(",");
+     board[i] = new Tile(Integer.parseInt(tileInfo[0]), Integer.parseInt(tileInfo[1]), Integer.parseInt(tileInfo[2]));
+   }
+   String[] door = lines[board.length+1].split(",");
+   doorlist[0] = new Door(Integer.parseInt(door[0]),Integer.parseInt(door[1]),false);
+   door = lines[board.length+2].split(",");
+   doorlist[1] = new Door(Integer.parseInt(door[0]),Integer.parseInt(door[1]),true);
+   sawlist = new Saw[lines.length-(board.length+4)];
+   String[] saw;
+   for(int i=0;i<sawlist.length;i++){
+     saw = lines[board.length+4+i].split(",");
+     sawlist[i] = new Saw(Integer.parseInt(saw[0]),Integer.parseInt(saw[1]),Integer.parseInt(saw[2]),Integer.parseInt(saw[3]));
+   }
+   mainChar = new Character(0, 0, 0, 0, 50, 100);
  }

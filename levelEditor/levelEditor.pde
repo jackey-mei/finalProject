@@ -3,13 +3,18 @@
 //Press x to place saws
 
 static int current,tileSize;
+int stage = 2;
 boolean bigBrush=false;
 boolean sawmode=false;
+boolean doormode1=false;
+boolean doormode2=false;
 Tile[] board;
 Tile hovered;
 ArrayList<Saw> sawlist = new ArrayList<Saw>();
+ArrayList<Door> doorlist = new ArrayList<Door>(2);
 PrintWriter out;
 Saw ghostSaw;
+Door ghostDoor;
 
 void setup(){
   size(640,480);
@@ -21,8 +26,9 @@ void setup(){
       board[row*64+col]=new Tile(col,row,1);
     }
   }
-  out = createWriter("stage1.txt");
+  out = createWriter("stage"+stage+".txt");
   ghostSaw = new Saw(mouseX,mouseY,10,10);
+  ghostDoor = new Door(mouseX,mouseY,false);
 }
 
 void draw(){
@@ -35,10 +41,17 @@ void draw(){
   for(int i=0;i<sawlist.size();i++){
     sawlist.get(i).draw();
   }
+  for(int i=0;i<doorlist.size();i++){
+    doorlist.get(i).draw();
+  }
   if(sawmode){
     ghostSaw.xcor = mouseX;
     ghostSaw.ycor = mouseY;
     ghostSaw.draw();
+  }else if(doormode1 || doormode2){
+    ghostDoor.xcor = mouseX;
+    ghostDoor.ycor = mouseY;
+    ghostDoor.draw();
   }
   //Saw x = new Saw(100,100,10,480);
   //x.draw();
@@ -62,6 +75,10 @@ void mouseDragged(){
 void mousePressed(){
   if(sawmode){
     sawlist.add(new Saw(mouseX,mouseY,ghostSaw.damage,ghostSaw.rad));
+  }else if(doormode1){
+    doorlist.add(new Door(ghostDoor.xcor,ghostDoor.ycor,false));
+  }else if(doormode2){
+    doorlist.add(new Door(ghostDoor.xcor,ghostDoor.ycor,true));
   }else if(!bigBrush){
     hovered.type=current;
   }else{
@@ -105,9 +122,21 @@ void keyPressed(){
   }else if(key=='x'){
     sawmode=!sawmode;
     println("Place saws "+sawmode);
+  }else if(key=='c'){
+    doormode1=!doormode1;
+    println("Place doors 1"+doormode1);
+    ghostDoor.exit = false;
+  }else if(key=='v'){
+    doormode2=!doormode2;
+    println("Place doors 2"+doormode2);
+    ghostDoor.exit = true;
   }else if(key=='s'){
     for(int i=0;i<board.length;i++){
       out.println(board[i].xcor + "," + board[i].ycor + "," + board[i].type);
+    }
+    out.println("-doors-");
+    for(int i=0;i<doorlist.size();i++){
+      out.println(doorlist.get(i).xcor + "," + doorlist.get(i).ycor + "," + doorlist.get(i).exit);
     }
     out.println("-saws-");
     for(int i=0;i<sawlist.size();i++){
