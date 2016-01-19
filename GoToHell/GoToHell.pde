@@ -73,9 +73,8 @@ void draw() {
         }
         for (int i = 0; i < doorlist.length; i ++) {
           doorlist[i].draw();
-          if(doorlist[i].insideDoor((int)mainChar.xcor,(int)mainChar.ycor)){
+          if(doorlist[i].insideDoor((int)mainChar.xcor,(int)mainChar.ycor) && doorlist[i].exit){
             setStage(state-10+1);
-            state+=1;
             println("DOOR!!");
           }
         }
@@ -89,10 +88,10 @@ void draw() {
         if (keyPressed) {
           if (key == 'a') {
             if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-              if (mainChar.xvelocity >= -1.3) {
+              if (mainChar.xvelocity >= -3.0) {
                 mainChar.xacceleration = -0.2;
                 mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity < -1.3) {
+              } else if (mainChar.xvelocity < -3.0) {
                 if (mainChar.xstartUp == true) {
                   mainChar.xacceleration = 0;
                   mainChar.xstartUp = false;
@@ -100,10 +99,10 @@ void draw() {
               }
             }
             if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-              if (mainChar.xvelocity >= -1.3) {
+              if (mainChar.xvelocity >= -3.0) {
                 mainChar.xacceleration = -0.4;
                 mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity < -1.3) {
+              } else if (mainChar.xvelocity < -3.0) {
                 if (mainChar.xstartUp == true) {
                   mainChar.xacceleration = 0;
                   mainChar.xstartUp = false;
@@ -113,10 +112,10 @@ void draw() {
           }
           if (key == 'd') {
             if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-              if (mainChar.xvelocity <= 1.3) {
+              if (mainChar.xvelocity <= 3.0) {
                 mainChar.xacceleration = 0.2;
                 mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity > 1.3) {
+              } else if (mainChar.xvelocity > 3.0) {
                 if (mainChar.xstartUp == true) {
                   mainChar.xacceleration = 0;
                   mainChar.xstartUp = false;
@@ -124,10 +123,10 @@ void draw() {
               }
             }
             if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-              if (mainChar.xvelocity <= 1.3) {
+              if (mainChar.xvelocity <= 3.0) {
                 mainChar.xacceleration = 0.4;
                 mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity > 1.3) {
+              } else if (mainChar.xvelocity > 3.0) {
                 if (mainChar.xstartUp == true) {
                   mainChar.xacceleration = 0;
                   mainChar.xstartUp = false;
@@ -178,10 +177,10 @@ void mousePressed() {
 
 void keyReleased() {
   if (key == 'd') {
-    if (mainChar.xvelocity >= 1.3) {
+    if (mainChar.xvelocity >= 3.0) {
       mainChar.xacceleration = -0.2;
       mainChar.xrightSlowDown = true;
-    } else if (mainChar.xvelocity < 1.3) {
+    } else if (mainChar.xvelocity < 3.0) {
       if (mainChar.xrightSlowDown == false) {
         mainChar.xvelocity = 0;
         mainChar.xacceleration = 0;
@@ -189,10 +188,10 @@ void keyReleased() {
     }
   }
   if (key == 'a') {
-    if (mainChar.xvelocity <= -1.3) {
+    if (mainChar.xvelocity <= -3.0) {
       mainChar.xacceleration = 0.2;
       mainChar.xleftSlowDown = true;
-    } else if (mainChar.xvelocity > -1.3) {
+    } else if (mainChar.xvelocity > -3.0) {
       if (mainChar.xleftSlowDown == false) {
         mainChar.xvelocity = 0;
         mainChar.xacceleration = 0;

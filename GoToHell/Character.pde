@@ -46,7 +46,31 @@ class Character {
          yacceleration = 0;
          yslowDown = false;
        }
-     }   
-  } 
+     }
+     land();
+     //fall();
+  }
+  
+  boolean standing(){
+    return 1==getTile(xcor+1,ycor+31).type ||
+    1==getTile(xcor+19,ycor+31).type ||
+    2==getTile(xcor+1,ycor+31).type ||
+    2==getTile(xcor+19,ycor+31).type;
+  }
+  
+  void land(){
+   if(standing()){
+     yvelocity = 0;
+     yacceleration = 0;
+   }
+  }
+  
+  void fall(){
+    if(!standing()){
+      mainChar.yvelocity = -3.0;
+      mainChar.yacceleration = 0.2;
+      mainChar.yslowDown = true;
+    }
+  }
 }
     
