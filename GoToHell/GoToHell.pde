@@ -68,14 +68,14 @@ void draw() {
     line(width / 10, height - height / 10, 0, 0);
   } else if (state > 10 && state < 21) {
     background(190, 80, 40);
-    for(int x=0;x<10;x++){
+    for (int x=0; x<10; x++) {
       if (state == 11+x) {
         for (int i = 0; i < board.length; i ++) {
           board[i].draw();
         }
         for (int i = 0; i < doorlist.length; i ++) {
           doorlist[i].draw();
-          if(doorlist[i].insideDoor((int)mainChar.xcor,(int)mainChar.ycor) && doorlist[i].exit){
+          if (doorlist[i].insideDoor((int)mainChar.xcor, (int)mainChar.ycor) && doorlist[i].exit) {
             setStage(state-10+1);
             println("DOOR!!");
           }
@@ -83,95 +83,93 @@ void draw() {
         mainChar.draw();
         /*
         if(mainChar.xvelocity!=0.0){
-          println(mainChar.xvelocity+","+mainChar.xacceleration+","+(mainChar.xrightSlowDown||mainChar.xleftSlowDown));
-        }
-        */
+         println(mainChar.xvelocity+","+mainChar.xacceleration+","+(mainChar.xrightSlowDown||mainChar.xleftSlowDown));
+         }
+         */
         for (int i = 0; i < sawlist.length; i ++) {
           sawlist[i].draw();
-          if(sawlist[i].insideSaw((int)mainChar.xcor,(int)mainChar.ycor)){
+          if (sawlist[i].insideSaw((int)mainChar.xcor, (int)mainChar.ycor)) {
             //println("HURT!!");
           }
         }
         if (keyPressed) {
-          if (key == 'a' && !mainChar.intoWallL()) {
-            if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-              if (mainChar.xvelocity >= -speedLimit) {
-                mainChar.xacceleration = -0.2;
-                mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity < -speedLimit) {
-                if (mainChar.xstartUp == true) {
-                  mainChar.xacceleration = 0;
-                  mainChar.xstartUp = false;
+          if (!mainChar.intoWallL()) {
+            if (key == 'a') {
+              if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
+                if (mainChar.xvelocity >= -speedLimit) {
+                  mainChar.xacceleration = -0.2;
+                  mainChar.xstartUp = true;
+                } else if (mainChar.xvelocity < -speedLimit) {
+                  if (mainChar.xstartUp == true) {
+                    mainChar.xacceleration = 0;
+                    mainChar.xstartUp = false;
+                  }
                 }
               }
-            }
-            if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-              if (mainChar.xvelocity >= -speedLimit) {
-                mainChar.xacceleration = -0.4;
-                mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity < -speedLimit) {
-                if (mainChar.xstartUp == true) {
+              if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
                   mainChar.xacceleration = 0;
-                  mainChar.xstartUp = false;
-                }
               }
             }
           }
-          if (key == 'd' && !mainChar.intoWallR()) {
-            if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-              if (mainChar.xvelocity <= speedLimit) {
-                mainChar.xacceleration = 0.2;
-                mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity > speedLimit) {
-                if (mainChar.xstartUp == true) {
-                  mainChar.xacceleration = 0;
-                  mainChar.xstartUp = false;
+          if (!mainChar.intoWallR()) {
+            if (key == 'd') {
+              if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
+                if (mainChar.xvelocity <= speedLimit) {
+                  mainChar.xacceleration = 0.2;
+                  mainChar.xstartUp = true;
+                } else if (mainChar.xvelocity > speedLimit) {
+                  if (mainChar.xstartUp == true) {
+                    mainChar.xacceleration = 0;
+                    mainChar.xstartUp = false;
+                  }
                 }
               }
-            }
-            if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-              if (mainChar.xvelocity <= speedLimit) {
-                mainChar.xacceleration = 0.4;
-                mainChar.xstartUp = true;
-              } else if (mainChar.xvelocity > speedLimit) {
-                if (mainChar.xstartUp == true) {
+              if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
                   mainChar.xacceleration = 0;
-                  mainChar.xstartUp = false;
-                }
               }
             }
           }
           if (key == ' ') {
-            if (mainChar.yvelocity == 0) {
+            if (mainChar.yvelocity == 0 && mainChar.isFalling == false) {
               mainChar.yvelocity = -speedLimit-1;
               mainChar.yacceleration = 0.2;
               mainChar.yslowDown = true;
             }
           }
-          
-          if(mainChar.xvelocity >= speedLimit){
+          if (mainChar.xvelocity >= speedLimit) {
             mainChar.xvelocity = speedLimit;
             mainChar.xacceleration = 0;
-          }else if(mainChar.xvelocity <= -speedLimit){
+          } else if (mainChar.xvelocity <= -speedLimit) {
             mainChar.xvelocity = -speedLimit;
             mainChar.xacceleration = 0;
           }
-          
-          if(!collided && (mainChar.intoWallL() || mainChar.intoWallR())){
+
+          if (mainChar.intoWallL()) {
             mainChar.xvelocity = 0;
             mainChar.xacceleration = 0;
             collided = true;
-          }else if(collided && !mainChar.intoWallL() && !mainChar.intoWallR()){
+            mainChar.xcor += 20;
+          }
+          else if (mainChar.intoWallR()) {
+            mainChar.xvelocity = 0;
+            mainChar.xacceleration = 0;
+            collided = true;
+            mainChar.xcor -= 20;
+          } 
+          else if (!mainChar.intoWallL() && !mainChar.intoWallR()) {
             collided = false;
           }
           //println(mainChar.xvelocity);
           //println(mainChar.intoWallL() +","+ mainChar.intoWallR());
-          println(collided);
-          
+          //println(collided);
+          println(mainChar.standing());
+          println(mainChar.whatStand());
+          //println(key);
         }
       }
+      println(mainChar.standing());
     }
-  }else if(state == 21){
+  } else if (state == 21) {
     state=1;
   }
 }
@@ -191,9 +189,9 @@ void mousePressed() {
     if (butts1[0].over == true) {
       state = 0; 
       println("Back");
-    } else{
-      for(int n=1;n<butts1.length;n++){
-        if(butts1[n].over == true){
+    } else {
+      for (int n=1; n<butts1.length; n++) {
+        if (butts1[n].over == true) {
           setStage(n);
         }
       }
@@ -202,60 +200,46 @@ void mousePressed() {
 }
 
 void keyReleased() {
-  if(state>10 && state<21){
-  if (key == 'd') {
-    if (mainChar.xvelocity >= speedLimit) {
+  if (state>10 && state<21) {
+    if (key == 'd') {
       mainChar.xacceleration = -0.2;
       mainChar.xrightSlowDown = true;
-    } else if (mainChar.xvelocity < speedLimit) {
-      if (mainChar.xrightSlowDown == false) {
-        mainChar.xvelocity = 0;
-        mainChar.xacceleration = 0;
-      }
     }
-  }
-  if (key == 'a') {
-    if (mainChar.xvelocity <= -speedLimit) {
+    if (key == 'a') {
       mainChar.xacceleration = 0.2;
       mainChar.xleftSlowDown = true;
-    } else if (mainChar.xvelocity > -speedLimit) {
-      if (mainChar.xleftSlowDown == false) {
-        mainChar.xvelocity = 0;
-        mainChar.xacceleration = 0;
-      }
     }
-  }
   }
   //println(mainChar.xvelocity);
 }
 
 //takes pixel coordinates and returns the Tile on those coordinates
-  Tile getTile(float x,float y){
-   int xcor = (int)x/10;
-   int ycor = (int)y/10;
-   return board[xcor+ycor*64];
- }
- 
- void setStage(int n){
-   state = 10+n;
-   if(state != 21){
-   println("Stage "+n);
-   String[] lines = loadStrings("stage"+n+".txt");
-   String[] tileInfo;
-   for (int i = 0; i < board.length; i ++) {
-     tileInfo = lines[i].split(",");
-     board[i] = new Tile(Integer.parseInt(tileInfo[0]), Integer.parseInt(tileInfo[1]), Integer.parseInt(tileInfo[2]));
-   }
-   String[] door = lines[board.length+1].split(",");
-   doorlist[0] = new Door(Integer.parseInt(door[0]),Integer.parseInt(door[1]),false);
-   door = lines[board.length+2].split(",");
-   doorlist[1] = new Door(Integer.parseInt(door[0]),Integer.parseInt(door[1]),true);
-   sawlist = new Saw[lines.length-(board.length+4)];
-   String[] saw;
-   for(int i=0;i<sawlist.length;i++){
-     saw = lines[board.length+4+i].split(",");
-     sawlist[i] = new Saw(Integer.parseInt(saw[0]),Integer.parseInt(saw[1]),Integer.parseInt(saw[2]),Integer.parseInt(saw[3]));
-   }
-   mainChar = new Character(0, 0, 0, 0, 50, 100);
-   }
- }
+Tile getTile(float x, float y) {
+  int xcor = (int)x/10;
+  int ycor = (int)y/10;
+  return board[xcor+ycor*64];
+}
+
+void setStage(int n) {
+  state = 10+n;
+  if (state != 21) {
+    println("Stage "+n);
+    String[] lines = loadStrings("stage"+n+".txt");
+    String[] tileInfo;
+    for (int i = 0; i < board.length; i ++) {
+      tileInfo = lines[i].split(",");
+      board[i] = new Tile(Integer.parseInt(tileInfo[0]), Integer.parseInt(tileInfo[1]), Integer.parseInt(tileInfo[2]));
+    }
+    String[] door = lines[board.length+1].split(",");
+    doorlist[0] = new Door(Integer.parseInt(door[0]), Integer.parseInt(door[1]), false);
+    door = lines[board.length+2].split(",");
+    doorlist[1] = new Door(Integer.parseInt(door[0]), Integer.parseInt(door[1]), true);
+    sawlist = new Saw[lines.length-(board.length+4)];
+    String[] saw;
+    for (int i=0; i<sawlist.length; i++) {
+      saw = lines[board.length+4+i].split(",");
+      sawlist[i] = new Saw(Integer.parseInt(saw[0]), Integer.parseInt(saw[1]), Integer.parseInt(saw[2]), Integer.parseInt(saw[3]));
+    }
+    mainChar = new Character(0, 0, 0, 0, 50, 100);
+  }
+}
