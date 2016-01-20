@@ -14,6 +14,7 @@ PImage mainmenu;
 Saw[] sawlist;
 Door[] doorlist = new Door[2];
 float speedLimit = 3.0;
+boolean collided = false;
 
 void setup() {
   size(640, 480);
@@ -88,11 +89,11 @@ void draw() {
         for (int i = 0; i < sawlist.length; i ++) {
           sawlist[i].draw();
           if(sawlist[i].insideSaw((int)mainChar.xcor,(int)mainChar.ycor)){
-            println("HURT!!");
+            //println("HURT!!");
           }
         }
         if (keyPressed) {
-          if (key == 'a') {
+          if (key == 'a' && !mainChar.intoWallL()) {
             if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
               if (mainChar.xvelocity >= -speedLimit) {
                 mainChar.xacceleration = -0.2;
@@ -116,7 +117,7 @@ void draw() {
               }
             }
           }
-          if (key == 'd') {
+          if (key == 'd' && !mainChar.intoWallR()) {
             if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
               if (mainChar.xvelocity <= speedLimit) {
                 mainChar.xacceleration = 0.2;
@@ -155,7 +156,18 @@ void draw() {
             mainChar.xvelocity = -speedLimit;
             mainChar.xacceleration = 0;
           }
+          
+          if(!collided && (mainChar.intoWallL() || mainChar.intoWallR())){
+            mainChar.xvelocity = 0;
+            mainChar.xacceleration = 0;
+            collided = true;
+          }else if(collided && !mainChar.intoWallL() && !mainChar.intoWallR()){
+            collided = false;
+          }
           //println(mainChar.xvelocity);
+          //println(mainChar.intoWallL() +","+ mainChar.intoWallR());
+          println(collided);
+          
         }
       }
     }
@@ -190,6 +202,7 @@ void mousePressed() {
 }
 
 void keyReleased() {
+  if(state>10 && state<21){
   if (key == 'd') {
     if (mainChar.xvelocity >= speedLimit) {
       mainChar.xacceleration = -0.2;
@@ -211,6 +224,7 @@ void keyReleased() {
         mainChar.xacceleration = 0;
       }
     }
+  }
   }
   //println(mainChar.xvelocity);
 }

@@ -71,5 +71,15 @@ class Character {
       mainChar.yacceleration = 0.3;
     }
   }
+  
+  boolean intoWallL(){
+    return 0 != getTile(xcor-1,ycor+1).type ||
+    0 != getTile(xcor-1,ycor+22).type;
+  }
+  
+  boolean intoWallR(){
+    return 0 != getTile(xcor+21,ycor+1).type ||
+    0 != getTile(xcor+21,ycor+22).type;
+  }
 }
     

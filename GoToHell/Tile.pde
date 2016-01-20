@@ -26,6 +26,13 @@ class Tile {
      else if (type == 4) {
        col = color(5, 180, 85);
      }
+     if(getTile(mainChar.xcor-1,mainChar.ycor+1)==this ||
+        getTile(mainChar.xcor+21,mainChar.ycor+1)==this||
+        getTile(mainChar.xcor-1,mainChar.ycor+22)==this||
+        getTile(mainChar.xcor+21,mainChar.ycor+22)==this){
+     col = color(255);
+     //println( type);
+     }
    fill(col);
    noStroke();
    rect(xcor * tileSize, ycor * tileSize, tileSize, tileSize);

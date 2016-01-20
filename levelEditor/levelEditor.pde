@@ -3,7 +3,7 @@
 //Press x to place saws
 
 static int current,tileSize;
-int stage = 2;
+int stage = 1;
 boolean bigBrush=false;
 boolean sawmode=false;
 boolean doormode1=false;
