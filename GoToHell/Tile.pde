@@ -26,10 +26,10 @@ class Tile {
      else if (type == 4) {
        col = color(5, 180, 85);
      }
-     if(getTile(mainChar.xcor-1,mainChar.ycor+1)==this ||
-        getTile(mainChar.xcor+21,mainChar.ycor+1)==this||
-        getTile(mainChar.xcor-1,mainChar.ycor+22)==this||
-        getTile(mainChar.xcor+21,mainChar.ycor+22)==this){
+     if(getTile(mainChar.xcor - 1,mainChar.ycor + 1)==this ||    //-1, +1
+        getTile(mainChar.xcor+21,mainChar.ycor + 1)==this||    // +21, +1
+        getTile(mainChar.xcor-1,mainChar.ycor+22)==this||    // -1, +22
+        getTile(mainChar.xcor+21,mainChar.ycor+22)==this){   //+21, +22
      col = color(255);
      //println( type);
      }
