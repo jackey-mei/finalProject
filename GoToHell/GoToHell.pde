@@ -15,6 +15,7 @@ Saw[] sawlist;
 Door[] doorlist = new Door[2];
 float speedLimit = 3.0;
 boolean collided = false;
+char keyBeforeJump; 
 
 void setup() {
   size(640, 480);
@@ -93,6 +94,9 @@ void draw() {
           }
         }
         if (keyPressed) {
+          if (key == 'a' && key == 'd') {
+            keyBeforeJump = key;
+          }
           if (!mainChar.intoWallL()) {
             if (key == 'a') {
               if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
@@ -113,6 +117,7 @@ void draw() {
           }
           if (!mainChar.intoWallR()) {
             if (key == 'd') {
+              println("D IS RUNNING");
               if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
                 if (mainChar.xvelocity <= speedLimit) {
                   mainChar.xacceleration = 0.2;
@@ -130,6 +135,7 @@ void draw() {
             }
           }
           if (key == ' ') {
+            println("Jumped");
             if (mainChar.yvelocity == 0 && mainChar.isFalling == false) {
               mainChar.yvelocity = -speedLimit-1;
               mainChar.yacceleration = 0.2;
@@ -162,12 +168,12 @@ void draw() {
           //println(mainChar.xvelocity);
           //println(mainChar.intoWallL() +","+ mainChar.intoWallR());
           //println(collided);
-          println(mainChar.standing());
-          println(mainChar.whatStand());
+          //println(mainChar.standing());
+          //println(mainChar.whatStand());
           //println(key);
         }
       }
-      println(mainChar.standing());
+      //println(key);
     }
   } else if (state == 21) {
     state=1;
