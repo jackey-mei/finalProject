@@ -13,7 +13,6 @@ color buttonHover;
 PImage mainmenu;
 Saw[] sawlist;
 Door[] doorlist = new Door[2];
-float speedLimit = 3.0;
 boolean collided = false;
 char keyBeforeJump; 
 
@@ -93,90 +92,25 @@ void draw() {
             //println("HURT!!");
           }
         }
-        if (keyPressed) {
-          if (key == 'a' && key == 'd') {
-            keyBeforeJump = key;
-          }
-          if (!mainChar.intoWallL()) {
-            if (key == 'a') {
-              if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-                if (mainChar.xvelocity >= -speedLimit) {
-                  mainChar.xacceleration = -0.2;
-                  mainChar.xstartUp = true;
-                } else if (mainChar.xvelocity < -speedLimit) {
-                  if (mainChar.xstartUp == true) {
-                    mainChar.xacceleration = 0;
-                    mainChar.xstartUp = false;
-                  }
-                }
-              }
-              if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-                  mainChar.xacceleration = 0;
-              }
-            }
-          }
-          if (!mainChar.intoWallR()) {
-            if (key == 'd') {
-              println("D IS RUNNING");
-              if (mainChar.yvelocity == 0 && mainChar.yacceleration == 0) {
-                if (mainChar.xvelocity <= speedLimit) {
-                  mainChar.xacceleration = 0.2;
-                  mainChar.xstartUp = true;
-                } else if (mainChar.xvelocity > speedLimit) {
-                  if (mainChar.xstartUp == true) {
-                    mainChar.xacceleration = 0;
-                    mainChar.xstartUp = false;
-                  }
-                }
-              }
-              if (mainChar.yvelocity != 0 || mainChar.yacceleration != 0) {
-                  mainChar.xacceleration = 0;
-              }
-            }
-          }
-          if (key == ' ') {
-            println("Jumped");
-            if (mainChar.yvelocity == 0 && mainChar.isFalling == false) {
-              mainChar.yvelocity = -speedLimit-1;
-              mainChar.yacceleration = 0.2;
-              mainChar.yslowDown = true;
-            }
-          }
-          if (mainChar.xvelocity >= speedLimit) {
-            mainChar.xvelocity = speedLimit;
-            mainChar.xacceleration = 0;
-          } else if (mainChar.xvelocity <= -speedLimit) {
-            mainChar.xvelocity = -speedLimit;
-            mainChar.xacceleration = 0;
-          }
-
-          if (mainChar.intoWallL()) {
-            mainChar.xvelocity = 0;
-            mainChar.xacceleration = 0;
-            collided = true;
-            mainChar.xcor += 20;
-          }
-          else if (mainChar.intoWallR()) {
-            mainChar.xvelocity = 0;
-            mainChar.xacceleration = 0;
-            collided = true;
-            mainChar.xcor -= 20;
-          } 
-          else if (!mainChar.intoWallL() && !mainChar.intoWallR()) {
-            collided = false;
-          }
-          //println(mainChar.xvelocity);
-          //println(mainChar.intoWallL() +","+ mainChar.intoWallR());
-          //println(collided);
-          //println(mainChar.standing());
-          //println(mainChar.whatStand());
-          //println(key);
-        }
       }
+
       //println(key);
+      else if (state == 21) {
+        state=1;
+      }
     }
-  } else if (state == 21) {
-    state=1;
+  }
+}
+
+void keyReleased() {
+  if (key == 'd') {
+    println("d was released");
+    mainChar.xacceleration = -0.2;
+    mainChar.xrightSlowDown = true;
+  }
+  if (key == 'a') {
+    mainChar.xacceleration = 0.2;
+    mainChar.xleftSlowDown = true;
   }
 }
 
@@ -203,20 +137,6 @@ void mousePressed() {
       }
     }
   }
-}
-
-void keyReleased() {
-  if (state>10 && state<21) {
-    if (key == 'd') {
-      mainChar.xacceleration = -0.2;
-      mainChar.xrightSlowDown = true;
-    }
-    if (key == 'a') {
-      mainChar.xacceleration = 0.2;
-      mainChar.xleftSlowDown = true;
-    }
-  }
-  //println(mainChar.xvelocity);
 }
 
 //takes pixel coordinates and returns the Tile on those coordinates
