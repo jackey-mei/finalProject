@@ -10,7 +10,7 @@ Character mainChar;
 char currentKey;
 color buttonNormal;
 color buttonHover;
-PImage mainmenu;
+PImage mainmenu,stagebg;
 Saw[] sawlist;
 Door[] doorlist = new Door[2];
 boolean collided = false;
@@ -70,6 +70,8 @@ void draw() {
     background(190, 80, 40);
     for (int x=0; x<10; x++) {
       if (state == 11+x) {
+        stagebg = loadImage("stagebg"+(x+1)+".png");
+        background(stagebg);
         for (int i = 0; i < board.length; i ++) {
           board[i].draw();
         }

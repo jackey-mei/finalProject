@@ -12,10 +12,10 @@ class Tile {
  
  void draw() {
      if (type == 0) {
-       col = color(150, 60, 120);
+       col = color(150, 60, 120,0);
      }
      else if (type == 1) {
-       col = color(340, 20, 20);
+       col = color(200, 120, 80);
      }
      else if (type == 2) {
        col = color(340, 20, 50);
