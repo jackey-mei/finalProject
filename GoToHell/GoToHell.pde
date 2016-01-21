@@ -114,6 +114,9 @@ void keyReleased() {
     mainChar.xacceleration = 0.2;
     mainChar.xleftSlowDown = true;
   }
+  if (key == ' ') {
+    mainChar.isJumping = false;
+  }
 }
 
 void mousePressed() {

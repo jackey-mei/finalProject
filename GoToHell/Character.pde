@@ -1,6 +1,6 @@
 class Character {
   float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor, gravity, speedlimit;
-  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling;
+  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling, isJumping;
   PShape square;
   PImage sprite = loadImage("charspriteR.png");
 
@@ -15,6 +15,7 @@ class Character {
     xrightSlowDown = false;
     xstartUp = false;
     isFalling = false;
+    isJumping = false;
     speedlimit = 3.0;
     square = createShape(RECT, 0, 0, 10, 10);
     square.setFill(color(0, 100, 75));
@@ -24,6 +25,7 @@ class Character {
   void draw() {
     //shape(square, xcor, ycor);
     //rect(xcor,ycor,10,15);
+    println(xvelocity);
     image(sprite, xcor, ycor);
     xvelocity += xacceleration;
     yvelocity += yacceleration;
@@ -66,7 +68,9 @@ class Character {
             }
           }
           if (yvelocity != 0 || yacceleration != 0) {
-            xacceleration = 0;
+            xvelocity = -2.5;
+            xacceleration = 1.5;
+            
           }
         }
       }
@@ -85,40 +89,49 @@ class Character {
             }
           }
           if (yvelocity != 0 || yacceleration != 0) {
+            xvelocity = 2.5;
             xacceleration = 0;
           }
         }
       }
       if (key == ' ') {
         println("space");
-        if (yvelocity == 0 && isFalling == false) {
-          yvelocity = -speedlimit - 1;
-          yacceleration = 0.2;
-          yslowDown = true;
-        }
-        if (xvelocity >= speedlimit) {
-          xvelocity = speedlimit;
-          xacceleration = 0;
-        } else if (xvelocity <= -speedlimit) {
-          xvelocity = -speedlimit;
-          xacceleration = 0;
+        if (!isJumping) {
+          if (yvelocity == 0 && isFalling == false) {
+            yvelocity = -speedlimit - 1;
+            yacceleration = 0.2;
+            yslowDown = true;
+            isJumping = true;
+          }
+          if (xvelocity >= speedlimit) {
+            xvelocity = speedlimit;
+            xacceleration = 0;
+          } else if (xvelocity <= -speedlimit) {
+            xvelocity = -speedlimit;
+            xacceleration = 0;
+          }
         }
       }
     }
+
     if (intoWallL()) {
       println("Colliding WIth Left Wall");
       xvelocity = 0;
       xacceleration = 0;
       collided = true;
-      xcor += 20;
+      xcor += 5;
     } else if (intoWallR()) {
       println("Colliding with Right Wall");
       xvelocity = 0;
       xacceleration = 0;
       collided = true;
-      xcor -= 20;
-    } else if (!intoWallL() && !intoWallR()) {
-      collided = false;
+      xcor -= 5;
+    } 
+    if (intoCeiling()) {
+      println("Colliding With Ceiling");
+      yvelocity = 0;
+      yacceleration = 0.2;
+      yslowDown = true;
     }
     //println(xvelocity);
     //println(intoWallL() +","+ intoWallR());
@@ -155,11 +168,16 @@ class Character {
 
   boolean intoWallL() {
     return 0 != getTile(xcor-1, ycor).type || //-1, 1
-           0 != getTile(xcor-1, ycor+29).type; //-1, 22
+      0 != getTile(xcor-1, ycor+22).type; //-1, 22
   }
 
   boolean intoWallR() {
-    return 0 != getTile(xcor+20, ycor).type || //21, 1
-      0 != getTile(xcor+20, ycor+ 29).type; //21, 22
+    return 0 != getTile(xcor+20, ycor+1).type || //21, 1
+      0 != getTile(xcor+20, ycor+ 22).type; //21, 22
+  }
+
+  boolean intoCeiling() {
+    return 0 != getTile(xcor+5, ycor -5).type ||
+      0 != getTile(xcor + 15, ycor -5).type;
   }
 }
