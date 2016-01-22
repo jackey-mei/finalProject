@@ -13,6 +13,7 @@ color buttonHover;
 PImage mainmenu, stagebg;
 Saw[] sawlist;
 Door[] doorlist = new Door[2];
+Timer timer;
 
 void setup() {
   size(640, 480);
@@ -25,7 +26,7 @@ void setup() {
   background(190, 80, 40);
   noStroke();
   mainmenu = loadImage("mainmenu.png");
-  font = createFont("Arial - Black", 16, true);
+  font = createFont("Arial-Black", 16, true);
   butts0[0] = new txtButton(width / 5, height / 3 + 10 * height / 48, "Play", fontsize, buttonNormal, buttonHover);
   butts0[1] = new txtButton(width / 5, height / 3 + 15 * height / 48, "Records", fontsize, buttonNormal, buttonHover);
   butts0[2] = new txtButton(width / 5, height / 3 + 20 * height / 48, "Exit", fontsize, buttonNormal, buttonHover);
@@ -43,6 +44,7 @@ void setup() {
     }
   }
   board = new Tile[64 * 48];
+  timer = new Timer();
 }
 
 void draw() {
@@ -72,6 +74,9 @@ void draw() {
     background(190, 80, 40);
     for (int x = 0; x < 10; x ++) {
       if (state == 11 + x) {
+        timer.end();
+        
+        //println(timer.result());
         stagebg = loadImage("stagebg" + (x + 1) + ".png");
         background(stagebg);
         for (int i = 0; i < board.length; i ++) {
@@ -91,6 +96,9 @@ void draw() {
             // println("HURT!!");
           }
         }
+        textSize(20);
+        fill(255);
+        text(""+timer.result(),50,50);
       }
       //println(key);
       else if (state == 21) {
@@ -173,5 +181,6 @@ void setStage(int n) {
       sawlist[i] = new Saw(Integer.parseInt(saw[0]), Integer.parseInt(saw[1]), Integer.parseInt(saw[2]), Integer.parseInt(saw[3]));
     }
     mainChar = new Character(0, 0, 0, 0, 50, 100);
+    timer.begin();
   }
 }

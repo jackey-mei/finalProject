@@ -15,7 +15,7 @@ class Tile {
        col = color(150, 60, 120,0);
      }
      else if (type == 1) {
-       col = color(200, 120, 80);
+       col = color(200, 120, 40);
      }
      else if (type == 2) {
        col = color(340, 20, 50);
