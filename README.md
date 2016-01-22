@@ -1,6 +1,6 @@
 # finalProject
 
-1/19/16
+<b>1/19/16</b>
 
 Wendy
 
@@ -11,7 +11,7 @@ Jackey
 
 Made changes to collisions
 
-1/20/16
+<b>1/20/16</b>
 
 Wendy
 
@@ -22,7 +22,7 @@ Jackey
 
 Fixed major bug with collisions against walls L/R
 
-1/21/16
+<b>1/21/16</b>
 
 Wendy
 
