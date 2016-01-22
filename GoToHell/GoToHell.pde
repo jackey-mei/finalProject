@@ -1,7 +1,7 @@
-static int state, tileSize; //  0 = Main Menu; 1 = Play / Stage Select; 2 = Stat Record; 3 = Gameplay
+static int state, tileSize; //  0 = Main Menu; 1 = Play / Stage Select; 2 = Stat Record; 3 = Pause;
                             // 11 - 20 = stages 1 - 10
 PFont font;
-int fontsize = 20;
+int fontsize = 20,beforePause;
 txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
 Tile[] board;
@@ -70,6 +70,11 @@ void draw() {
     fill(255);
     line(width / 10, height - height / 10, 0, 0);
   } 
+  else if (state ==3){
+    fill(255);
+    textSize(100);
+    text("PAUSE",120,290);
+  }
   else if (state > 10 && state < 21) {
     background(190, 80, 40);
     for (int x = 0; x < 10; x ++) {
@@ -89,6 +94,8 @@ void draw() {
             println("DOOR");
           }
         }
+        mainChar.xcor = doorlist[0].xcor+5;
+        mainChar.ycor = doorlist[0].ycor+10;
         mainChar.draw();
         for (int i = 0; i < sawlist.length; i ++) {
           sawlist[i].draw();
@@ -96,9 +103,9 @@ void draw() {
             // println("HURT!!");
           }
         }
-        textSize(20);
+        textSize(15);
         fill(255);
-        text(""+timer.result(),50,50);
+        text(""+timer.result(),25,35);
       }
       //println(key);
       else if (state == 21) {
@@ -125,7 +132,16 @@ void keyReleased() {
     mainChar.hasJumped = false;
   }
 }
-
+ void keyPressed(){
+   if (key==27 && state<21 && state>10){
+     key = 0;
+     beforePause = state;
+     state = 3;
+   }else if (key==27 && state==3){
+     key = 0;
+     state = beforePause;
+   }
+ }
 void mousePressed() {
   if (state == 0) {
     if (butts0[0].over == true) {
