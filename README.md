@@ -2,21 +2,28 @@
 
 1/19/16
 
-Wendy:
-implemented initial collision
-made stage bg art
+Wendy
+Implemented initial collision settings/tests
+Made stage background art
 
-Jackie:
-worked on collision and physics
----------------------------------------
+Jackey
+Made changes to collisions
 
 1/20/16
 
-Wendy:
-testing
-debug
-implemented art
+Wendy
+Debugged physics
+Implemented more art
 
-Jackie:
-worked on collision
-fixed major collision bug
+Jackey
+Fixed major bug with collisions against walls L/R
+
+1/21/16
+
+Wendy
+
+Jackey
+Added left-right acceleration to jumping
+Fixed movement when colliding against ceilings, left-right walls
+Fixed speed-boost bugs when jumping and moving at the same time
+Cleaned up spacing/syntax of code
