@@ -17,7 +17,7 @@ Timer timer;
 
 void setup() {
   size(640, 480);
-  //  size(1280, 960);
+  //size(1280, 960);
   tileSize = width / 64;
   colorMode(HSB);
   state = 0;
@@ -113,11 +113,13 @@ void keyReleased() {
     mainChar.xacceleration = - 0.2;
     mainChar.xrightSlowDown = true;
     mainChar.movingRight = false;
+    mainChar.keyPriorityRight = false;
   }
   if (key == 'a') {
     mainChar.xacceleration = 0.2;
     mainChar.xleftSlowDown = true;
     mainChar.movingLeft = false;
+    mainChar.keyPriorityLeft = false;
   }
   if (key == ' ') {
     mainChar.hasJumped = false;

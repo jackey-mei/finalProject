@@ -1,6 +1,6 @@
 class Character {
   float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor, gravity, speedlimit;
-  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling, hasJumped, movingLeft, movingRight;
+  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling, hasJumped, movingLeft, movingRight, keyPriorityLeft, keyPriorityRight;
   PShape square;
   PImage sprite = loadImage("charspriteR.png");
 
@@ -19,6 +19,8 @@ class Character {
     speedlimit = 3.0;
     movingLeft = false;
     movingRight = false;
+    keyPriorityLeft = false;
+    keyPriorityRight = false;
     square = createShape(RECT, 0, 0, 10, 10);
     square.setFill(color(0, 100, 75));
     square.setStroke(false);
@@ -26,7 +28,7 @@ class Character {
 
   void draw() {
     //shape(square, xcor, ycor);
-    //rect(xcor,ycor,10,15);
+    //rect(xcor, ycor, 10, 15);
     image(sprite, xcor, ycor);
     xvelocity += xacceleration;
     yvelocity += yacceleration;
@@ -57,11 +59,15 @@ class Character {
       if (!intoWallL()) {
         if (key == 'a') {
           movingLeft = true;
+          keyPriorityLeft = true;
+          keyPriorityRight = false;
         }
       }
       if (!intoWallR()) {
         if (key == 'd') {
           movingRight = true;
+          keyPriorityLeft = false;
+          keyPriorityRight = true;
         }
       }
       if (!intoCeiling())
@@ -76,7 +82,7 @@ class Character {
           hasJumped = true;
         }
       }
-      if (movingLeft) {
+      if (movingLeft && keyPriorityLeft) {
         if (yvelocity == 0 && yacceleration == 0) {
           if (xvelocity >= -speedlimit) {
             xacceleration = -0.2;
@@ -99,7 +105,7 @@ class Character {
           }
         }
       }
-      if (movingRight) {
+      if (movingRight && keyPriorityRight) {
         if (yvelocity == 0 && yacceleration == 0) {
           if (xvelocity <= speedlimit) {
             xacceleration = 0.2;
