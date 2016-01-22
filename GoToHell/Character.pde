@@ -158,10 +158,10 @@ class Character {
     //println(mainChar.xvelocity);
 
     boolean standing() {
-      return 1 == getTile(xcor + 1, ycor+30).type || 
-        1 == getTile(xcor+19, ycor+30).type ||
-        3 == getTile(xcor + 1, ycor+30).type || 
-        3 == getTile(xcor+19, ycor+30).type;
+      return 1 == getTile(xcor + 5, ycor + 30).type || 
+        1 == getTile(xcor + 15, ycor + 30).type ||
+        3 == getTile(xcor + 5, ycor + 30).type || 
+        3 == getTile(xcor + 15, ycor + 30).type;
     }
 
     void land() {
@@ -181,12 +181,12 @@ class Character {
     }
 
     boolean intoWallL() {
-      return 0 != getTile(xcor - 1, ycor).type || //-1, 1
+      return 0 != getTile(xcor - 1, ycor + 5).type || //-1, 1
         0 != getTile(xcor - 1, ycor + 25).type; //-1, 22
     }
 
     boolean intoWallR() {
-      return 0 != getTile(xcor + 20, ycor + 1).type || //21, 1
+      return 0 != getTile(xcor + 20, ycor + 5).type || //21, 1
         0 != getTile(xcor + 20, ycor + 25).type; //21, 22
     }
 
