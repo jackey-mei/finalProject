@@ -4,7 +4,7 @@
 
 Wendy
 
-Implemented initial collision settings/tests
+Implemented initial collision settings/tests<br>
 Made stage background art
 
 Jackey
@@ -15,7 +15,7 @@ Made changes to collisions
 
 Wendy
 
-Debugged physics
+Debugged physics<br>
 Implemented more art
 
 Jackey
@@ -28,7 +28,7 @@ Wendy
 
 Jackey
 
-Added left-right acceleration to jumping
-Fixed movement when colliding against ceilings, left-right walls
-Fixed speed-boost bugs when jumping and moving at the same time
+Added left-right acceleration to jumping<br>
+Fixed movement when colliding against ceilings, left-right walls<br>
+Fixed speed-boost bugs when jumping and moving at the same time<br>
 Cleaned up spacing/syntax of code
