@@ -26,6 +26,9 @@ Fixed major bug with collisions against walls L/R
 
 Wendy
 
+Graphic improvements
+Added timer
+
 Jackey
 
 Added left-right acceleration to jumping<br>
