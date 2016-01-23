@@ -31,7 +31,7 @@ class Tile {
         getTile(mainChar.xcor - 5,mainChar.ycor + 25)==this ||    // -1, +22
         getTile(mainChar.xcor + 25,mainChar.ycor + 25)==this) ||   //+21, +22
         getTile(mainChar.xcor + 5, mainChar.ycor - 5)==this ||
-        getTile(mainChar.xcor + 15, mainChar.ycor - 5)==this){
+        getTile(mainChar.xcor + 15, mainChar.ycor - 5)==this) {
      col = color(255);
      //println(type);
      }*/

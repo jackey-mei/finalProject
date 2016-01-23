@@ -15,12 +15,12 @@ class txtButton {
    this.size = size;
  }
  
- void draw(){
-   // colorMode(HSB);
+ void draw() {
+   //colorMode(HSB);
    textAlign(LEFT, BOTTOM);
    textSize(size);
    over();
-   if (over){
+   if (over) {
      fill(overColor);
    }
    else {
@@ -29,7 +29,7 @@ class txtButton {
    text(text, x, y);
  }
  
- void over(){
+ void over() {
   if (mouseX >= x && mouseX <= x + textWidth(text) && mouseY <= y && mouseY >= y - size) {
    over = true; 
   }

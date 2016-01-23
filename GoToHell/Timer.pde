@@ -1,4 +1,4 @@
-class Timer{
+class Timer {
  int start, end;
  
  Timer() {
@@ -14,7 +14,7 @@ class Timer{
   end = millis(); 
  }
  
- float result(){
+ float result() {
   return (end - start) / 1000.0;
  }
 }

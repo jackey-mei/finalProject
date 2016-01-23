@@ -1,7 +1,7 @@
 static int state, tileSize; //  0 = Main Menu; 1 = Play / Stage Select; 2 = Stat Record; 3 = Pause;
                             // 11 - 20 = stages 1 - 10
 PFont font;
-int fontsize = 20,beforePause;
+int fontsize = 20, beforePause;
 txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
 Tile[] board;
@@ -94,8 +94,6 @@ void draw() {
             println("DOOR");
           }
         }
-        mainChar.xcor = doorlist[0].xcor+5;
-        mainChar.ycor = doorlist[0].ycor+10;
         mainChar.draw();
         for (int i = 0; i < sawlist.length; i ++) {
           sawlist[i].draw();
@@ -105,7 +103,7 @@ void draw() {
         }
         textSize(15);
         fill(255);
-        text(""+timer.result(),25,35);
+        text("" + timer.result(), 25, 35);
       }
       //println(key);
       else if (state == 21) {
@@ -133,13 +131,13 @@ void keyReleased() {
   }
 }
 
-void keyPressed(){
-  if (key==27 && state<21 && state>10){
+void keyPressed() {
+  if (key == 27 && state < 21 && state > 10) {
     key = 0;
     beforePause = state;
     state = 3;
   }
-  else if (key==27 && state==3){
+  else if (key == 27 && state == 3) {
     key = 0;
     state = beforePause;
   }
@@ -201,7 +199,7 @@ void setStage(int n) {
       saw = lines[board.length + 4 + i].split(",");
       sawlist[i] = new Saw(Integer.parseInt(saw[0]), Integer.parseInt(saw[1]), Integer.parseInt(saw[2]), Integer.parseInt(saw[3]));
     }
-    mainChar = new Character(0, 0, 0, 0, 50, 100);
+    mainChar = new Character(0, 0, 0, 0, doorlist[0].xcor + 5, doorlist[0].ycor + 10);
     timer.begin();
   }
 }

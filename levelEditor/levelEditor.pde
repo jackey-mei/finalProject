@@ -2,7 +2,7 @@
 //Press z to toggle big brush mode
 //Press x to place saws
 
-static int current,  tileSize; 
+static int current, tileSize; 
 int stage = 1; 
 boolean bigBrush = false; 
 boolean sawmode = false; 

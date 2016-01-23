@@ -1,7 +1,7 @@
 class Character {
   float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor, gravity, speedlimit;
   boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling, hasJumped, movingLeft, movingRight, keyPriorityLeft, keyPriorityRight;
-  PShape square;
+  //PShape square;
   PImage sprite = loadImage("charspriteR.png");
 
   Character(float xvelocity, float xacceleration, float yvelocity, float yacceleration, float xcor, float ycor) {
@@ -21,9 +21,9 @@ class Character {
     movingRight = false;
     keyPriorityLeft = false;
     keyPriorityRight = false;
-    square = createShape(RECT, 0, 0, 10, 10);
-    square.setFill(color(0, 100, 75));
-    square.setStroke(false);
+    //square = createShape(RECT, 0, 0, 10, 10);
+    //square.setFill(color(0, 100, 75));
+    //square.setStroke(false);
   }
 
   void draw() {
@@ -73,8 +73,9 @@ class Character {
           if (!hasJumped) {
             if (yvelocity == 0 && isFalling == false) {
               yvelocity = -speedlimit - 1;
-              yacceleration = 0.2;
+              yacceleration = 0.15;
               yslowDown = true;
+              isFalling = true;
             }
           }
           hasJumped = true;
@@ -85,17 +86,20 @@ class Character {
           if (xvelocity >= -speedlimit) {
             xacceleration = -0.2;
             xstartUp = true;
-          } else if (xvelocity < -speedlimit) {
+          } 
+          else if (xvelocity < -speedlimit) {
             if (xstartUp == true) {
               xacceleration = 0;
               xstartUp = false;
             }
           }
-        } else {
+        } 
+        else {
           if (xvelocity >= -speedlimit) {
             xacceleration = -0.15;
             xstartUp = true;
-          } else if (xvelocity < -speedlimit) {
+          } 
+          else if (xvelocity < -speedlimit) {
             if (xstartUp == true) {
               xacceleration = 0;
               xstartUp = false;
@@ -108,7 +112,8 @@ class Character {
           if (xvelocity <= speedlimit) {
             xacceleration = 0.2;
             xstartUp = true;
-          } else if (xvelocity > speedlimit) {
+          } 
+          else if (xvelocity > speedlimit) {
             if (xstartUp == true) {
               xacceleration = 0;
               xstartUp = false;
@@ -119,7 +124,8 @@ class Character {
           if (xvelocity <= speedlimit) {
             xacceleration = 0.15;
             xstartUp = true;
-          } else if (xvelocity > speedlimit) {
+          } 
+          else if (xvelocity > speedlimit) {
             if (xstartUp == true) {
               xacceleration = 0;
               xstartUp = false;
@@ -127,48 +133,42 @@ class Character {
           }
         }
       }
-      land();
-      fall();
+      println(yvelocity);
       if (intoWallL()) {
-        println("Colliding WIth Left Wall");
+        println("Colliding With Left Wall");
         xvelocity = 0;
         xacceleration = 0;
         xcor += 1;
-      } else if (intoWallR()) {
-        println("Colliding with Right Wall");
+      } 
+      else if (intoWallR()) {
+        println("Colliding With Right Wall");
         xvelocity = 0;
         xacceleration = 0;
         xcor -= 1;
       } 
       if (intoCeiling()) {
         println("Colliding With Ceiling");
-        yvelocity = 0;
-        yacceleration = 0.2;
-        yslowDown = true;
+        ycor += 1;
+      }
+      if (intoFloor()) {
+        println("Colliding With Floor");
+        if (yvelocity > 0) {
+          yvelocity = 0;
+          yacceleration = 0;
+          isFalling = false;
+        }
+      }
+      else {
+        yacceleration = 0.15;
+        isFalling = true;
       }
   }
 
-  boolean standing() {
+  boolean intoFloor() {
     return 1 == getTile(xcor + 5, ycor + 30).type || 
     1 == getTile(xcor + 15, ycor + 30).type ||
     3 == getTile(xcor + 5, ycor + 30).type || 
     3 == getTile(xcor + 15, ycor + 30).type;
-  }
-
-  void land() {
-    if (standing()) {
-      yvelocity = 0;
-      yacceleration = 0;
-      isFalling = false;
-    }
-  }
-
-  void fall() {
-    if (!standing() && !yslowDown) {
-      yvelocity = speedlimit / 1.5;
-      yacceleration = 0.3;
-      isFalling = true;
-    }
   }
 
   boolean intoWallL() {

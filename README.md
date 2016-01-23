@@ -26,7 +26,7 @@ Fixed major bug with collisions against walls L/R
 
 Wendy
 
-Graphic improvements
+Graphic improvements<br>
 Added timer
 
 Jackey
@@ -35,3 +35,12 @@ Added left-right acceleration to jumping<br>
 Fixed movement when colliding against ceilings, left-right walls<br>
 Fixed speed-boost bugs when jumping and moving at the same time<br>
 Cleaned up spacing/syntax of code
+
+<b>1/22/16</b>
+
+Wendy
+
+Jackey
+
+Cleaned up syntax of code<br>
+Prevented minor glitches with certain walls

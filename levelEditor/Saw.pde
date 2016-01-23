@@ -22,7 +22,7 @@ class Saw {
  }
  
  void shrink() {
-   if(rad > 5){
+   if(rad > 5) {
      rad -= 1;
    }
  }
