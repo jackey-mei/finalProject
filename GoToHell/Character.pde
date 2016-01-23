@@ -1,6 +1,6 @@
 class Character {
   float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor, gravity, speedlimit;
-  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling, hasJumped, movingLeft, movingRight, keyPriorityLeft, keyPriorityRight;
+  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling, hasJumped, movingLeft, movingRight, keyPriorityLeft, keyPriorityRight, wallClimbL, wallClimbR;
   //PShape square;
   PImage sprite = loadImage("charspriteR.png");
 
@@ -19,6 +19,8 @@ class Character {
     speedlimit = 3.0;
     movingLeft = false;
     movingRight = false;
+    wallClimbL = false;
+    wallClimbR = false;
     keyPriorityLeft = false;
     keyPriorityRight = false;
     //square = createShape(RECT, 0, 0, 10, 10);
@@ -71,7 +73,7 @@ class Character {
       if (!intoCeiling())
         if (key == ' ') {
           if (!hasJumped) {
-            if (yvelocity == 0 && isFalling == false) {
+            if (isFalling == false) {
               yvelocity = -speedlimit - 1;
               yacceleration = 0.15;
               yslowDown = true;
@@ -133,18 +135,25 @@ class Character {
           }
         }
       }
-      println(yvelocity);
       if (intoWallL()) {
         println("Colliding With Left Wall");
+        if (!intoFloor()) {
+          yvelocity += -abs(xvelocity / 4);
+        }
         xvelocity = 0;
         xacceleration = 0;
         xcor += 1;
+        wallClimbL = true;
       } 
       else if (intoWallR()) {
         println("Colliding With Right Wall");
+        if (!intoFloor()) {
+          yvelocity += -abs(xvelocity / 4);
+        }
         xvelocity = 0;
         xacceleration = 0;
         xcor -= 1;
+        wallClimbR = true;
       } 
       if (intoCeiling()) {
         println("Colliding With Ceiling");
@@ -157,11 +166,20 @@ class Character {
           yacceleration = 0;
           isFalling = false;
         }
+        if (!intoAirFeet()) {
+          ycor -= 1;
+        }
       }
       else {
         yacceleration = 0.15;
         isFalling = true;
       }
+      println(yvelocity);
+  }
+  
+  boolean intoAirFeet() {
+    return 0 == getTile(xcor + 5, ycor + 25).type ||
+    0 == getTile(xcor + 15, ycor + 25).type;
   }
 
   boolean intoFloor() {
