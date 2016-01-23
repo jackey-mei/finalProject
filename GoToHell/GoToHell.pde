@@ -70,10 +70,10 @@ void draw() {
     fill(255);
     line(width / 10, height - height / 10, 0, 0);
   } 
-  else if (state ==3){
+  else if (state == 3) {
     fill(255);
     textSize(100);
-    text("PAUSE",120,290);
+    text("PAUSE", 120, 290);
   }
   else if (state > 10 && state < 21) {
     background(190, 80, 40);
@@ -132,16 +132,19 @@ void keyReleased() {
     mainChar.hasJumped = false;
   }
 }
- void keyPressed(){
-   if (key==27 && state<21 && state>10){
-     key = 0;
-     beforePause = state;
-     state = 3;
-   }else if (key==27 && state==3){
-     key = 0;
-     state = beforePause;
-   }
- }
+
+void keyPressed(){
+  if (key==27 && state<21 && state>10){
+    key = 0;
+    beforePause = state;
+    state = 3;
+  }
+  else if (key==27 && state==3){
+    key = 0;
+    state = beforePause;
+  }
+}
+ 
 void mousePressed() {
   if (state == 0) {
     if (butts0[0].over == true) {
@@ -171,7 +174,7 @@ void mousePressed() {
   }
 }
 
- // takes pixel coordinates and returns the Tile on those coordinates
+// takes pixel coordinates and returns the Tile on those coordinates
 Tile getTile(float x, float y) {
   int xcor = (int)x / 10;
   int ycor = (int)y / 10;

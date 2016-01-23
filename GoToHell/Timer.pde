@@ -1,20 +1,20 @@
 class Timer{
- int start,end;
+ int start, end;
  
- Timer(){
-  start=0;
-  end=0;
+ Timer() {
+  start = 0;
+  end = 0;
  }
  
- void begin(){
-  start=millis(); 
+ void begin() {
+  start = millis(); 
  }
  
- void end(){
-  end=millis(); 
+ void end() {
+  end = millis(); 
  }
  
  float result(){
-  return (end-start)/1000.0;
+  return (end - start) / 1000.0;
  }
 }

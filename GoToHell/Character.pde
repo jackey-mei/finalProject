@@ -53,8 +53,6 @@ class Character {
         yslowDown = false;
       }
     }
-    land();
-    fall();
     if (keyPressed) {
       if (!intoWallL()) {
         if (key == 'a') {
@@ -129,7 +127,8 @@ class Character {
           }
         }
       }
-      println(xvelocity);
+      land();
+      fall();
       if (intoWallL()) {
         println("Colliding WIth Left Wall");
         xvelocity = 0;
@@ -147,51 +146,43 @@ class Character {
         yacceleration = 0.2;
         yslowDown = true;
       }
-      //println(xvelocity);
-      //println(intoWallL() +","+ intoWallR());
-      //println(collided);
-      //println(standing());
-      //println(whatStand());
-      //println(key);
-    }
+  }
 
-    //println(mainChar.xvelocity);
+  boolean standing() {
+    return 1 == getTile(xcor + 5, ycor + 30).type || 
+    1 == getTile(xcor + 15, ycor + 30).type ||
+    3 == getTile(xcor + 5, ycor + 30).type || 
+    3 == getTile(xcor + 15, ycor + 30).type;
+  }
 
-    boolean standing() {
-      return 1 == getTile(xcor + 5, ycor + 30).type || 
-        1 == getTile(xcor + 15, ycor + 30).type ||
-        3 == getTile(xcor + 5, ycor + 30).type || 
-        3 == getTile(xcor + 15, ycor + 30).type;
-    }
-
-    void land() {
-      if (standing()) {
-        yvelocity = 0;
-        yacceleration = 0;
-        isFalling = false;
-      }
-    }
-
-    void fall() {
-      if (!standing() && !yslowDown) {
-        yvelocity = speedlimit / 1.5;
-        yacceleration = 0.3;
-        isFalling = true;
-      }
-    }
-
-    boolean intoWallL() {
-      return 0 != getTile(xcor - 1, ycor + 5).type || //-1, 1
-        0 != getTile(xcor - 1, ycor + 25).type; //-1, 22
-    }
-
-    boolean intoWallR() {
-      return 0 != getTile(xcor + 20, ycor + 5).type || //21, 1
-        0 != getTile(xcor + 20, ycor + 25).type; //21, 22
-    }
-
-    boolean intoCeiling() {
-      return 0 != getTile(xcor + 5, ycor - 5).type ||
-        0 != getTile(xcor + 15, ycor - 5).type;
+  void land() {
+    if (standing()) {
+      yvelocity = 0;
+      yacceleration = 0;
+      isFalling = false;
     }
   }
+
+  void fall() {
+    if (!standing() && !yslowDown) {
+      yvelocity = speedlimit / 1.5;
+      yacceleration = 0.3;
+      isFalling = true;
+    }
+  }
+
+  boolean intoWallL() {
+    return 0 != getTile(xcor - 1, ycor + 5).type || //-1, 1
+    0 != getTile(xcor - 1, ycor + 25).type; //-1, 22
+  }
+  
+  boolean intoWallR() {
+    return 0 != getTile(xcor + 20, ycor + 5).type || //21, 1
+    0 != getTile(xcor + 20, ycor + 25).type; //21, 22
+  }
+  
+  boolean intoCeiling() {
+    return 0 != getTile(xcor + 5, ycor - 5).type ||
+    0 != getTile(xcor + 15, ycor - 5).type;
+  }
+}
