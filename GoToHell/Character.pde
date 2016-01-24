@@ -145,7 +145,7 @@ class Character {
         xcor += 1;
         wallClimbL = true;
       } 
-      else if (intoWallR()) {
+      if (intoWallR()) {
         println("Colliding With Right Wall");
         if (!intoFloor()) {
           yvelocity += -abs(xvelocity / 4);
@@ -154,13 +154,16 @@ class Character {
         xacceleration = 0;
         xcor -= 1;
         wallClimbR = true;
-      } 
+      }
+      else {
+        println("Not Colliding With Right Wall");
+      }
       if (intoCeiling()) {
         println("Colliding With Ceiling");
         ycor += 1;
       }
       if (intoFloor()) {
-        println("Colliding With Floor");
+        //println("Colliding With Floor");
         if (yvelocity > 0) {
           yvelocity = 0;
           yacceleration = 0;
@@ -174,7 +177,6 @@ class Character {
         yacceleration = 0.15;
         isFalling = true;
       }
-      println(yvelocity);
   }
   
   boolean intoAirFeet() {
@@ -190,13 +192,13 @@ class Character {
   }
 
   boolean intoWallL() {
-    return 0 != getTile(xcor - 1, ycor + 5).type || //-1, 1
-    0 != getTile(xcor - 1, ycor + 25).type; //-1, 22
+    return 2 == getTile(xcor - 1, ycor + 5).type || //-1, 1
+    2 == getTile(xcor - 1, ycor + 25).type; //-1, 22
   }
   
   boolean intoWallR() {
-    return 0 != getTile(xcor + 20, ycor + 5).type || //21, 1
-    0 != getTile(xcor + 20, ycor + 25).type; //21, 22
+    return 2 == getTile(xcor + 20, ycor + 5).type || //21, 1
+    2 == getTile(xcor + 20, ycor + 25).type; //21, 22
   }
   
   boolean intoCeiling() {
