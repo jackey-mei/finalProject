@@ -189,7 +189,12 @@ class Character {
       }
       if (intoCeiling()) {
         println("Colliding With Ceiling");
-        ycor += 1;
+        if (yvelocity < 0) {
+          yvelocity = 0;
+        }
+        if (intoAirCeiling()) {
+          ycor += 1;
+        }
       }
       if (intoFloor()) {
         //println("Colliding With Floor");
@@ -232,6 +237,11 @@ class Character {
     return 0 == getTile(xcor + 5, ycor + 25).type ||
     0 == getTile(xcor + 15, ycor + 25).type;
   }
+  
+  boolean intoAirCeiling() {
+    return 0 != getTile(xcor + 5, ycor + 5).type ||
+    0 != getTile(xcor + 15, ycor + 5).type;
+  }
 
   boolean intoFloor() {
     return 1 == getTile(xcor + 5, ycor + 30).type || 
@@ -251,7 +261,7 @@ class Character {
   }
   
   boolean intoCeiling() {
-    return 0 != getTile(xcor + 5, ycor - 5).type ||
-    0 != getTile(xcor + 15, ycor - 5).type;
+    return 0 != getTile(xcor + 5, ycor - 1).type ||
+    0 != getTile(xcor + 15, ycor - 1).type;
   }
 }
