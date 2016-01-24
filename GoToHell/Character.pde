@@ -61,6 +61,9 @@ class Character {
           movingLeft = true;
           keyPriorityLeft = true;
           keyPriorityRight = false;
+          if (wallClimbR) {
+            wallClimbR = false;
+          }
         }
       }
       if (!intoWallR()) {
@@ -68,6 +71,9 @@ class Character {
           movingRight = true;
           keyPriorityLeft = false;
           keyPriorityRight = true;
+          if (wallClimbL) {
+            wallClimbL = false;
+          }
         }
       }
       if (!intoCeiling())
@@ -79,6 +85,12 @@ class Character {
               yslowDown = true;
               isFalling = true;
             }
+            else if (wallClimbL || wallClimbR) {
+              yvelocity = -speedlimit - 1;
+              yacceleration = 0.15;
+              yslowDown = true;
+              isFalling = true;
+            } 
           }
           hasJumped = true;
         }
@@ -97,6 +109,9 @@ class Character {
           }
         } 
         else {
+          if (wallClimbR) {
+            wallClimbR = false;
+          }
           if (xvelocity >= -speedlimit) {
             xacceleration = -0.15;
             xstartUp = true;
@@ -123,6 +138,9 @@ class Character {
           }
         }
         else {
+          if (wallClimbL) {
+            wallClimbL = false;
+          }
           if (xvelocity <= speedlimit) {
             xacceleration = 0.15;
             xstartUp = true;
@@ -139,24 +157,35 @@ class Character {
         println("Colliding With Left Wall");
         if (!intoFloor()) {
           yvelocity += -abs(xvelocity / 4);
+          wallClimbL = true;
         }
-        xvelocity = 0;
-        xacceleration = 0;
-        xcor += 1;
-        wallClimbL = true;
+        if (xvelocity < 0) {
+          xvelocity = 0;
+          xacceleration = 0;
+        }
+        if (!intoAirLeft()) {
+          xcor += 1;
+        }
       } 
+      else {
+        wallClimbL = false;
+      }
       if (intoWallR()) {
-        println("Colliding With Right Wall");
+        //println("Colliding With Right Wall");
         if (!intoFloor()) {
           yvelocity += -abs(xvelocity / 4);
+          wallClimbR = true;
         }
-        xvelocity = 0;
-        xacceleration = 0;
-        xcor -= 1;
-        wallClimbR = true;
+        if (xvelocity > 0) {
+          xvelocity = 0;
+          xacceleration = 0;
+        }
+        if (!intoAirRight()) {
+          xcor -= 1;
+        }
       }
       else {
-        println("Not Colliding With Right Wall");
+        wallClimbR = false;
       }
       if (intoCeiling()) {
         println("Colliding With Ceiling");
@@ -172,11 +201,31 @@ class Character {
         if (!intoAirFeet()) {
           ycor -= 1;
         }
+        wallClimbR = false;
+        wallClimbL = false;
+      }
+      else if (wallClimbR || wallClimbL) {
+        if (!yslowDown) {
+          yvelocity = 1;
+          yacceleration = 0;
+        }
       }
       else {
         yacceleration = 0.15;
         isFalling = true;
+        wallClimbL = false;
+        wallClimbR = false;
       }
+  }
+  
+  boolean intoAirLeft() {
+    return 0 == getTile(xcor + 5, ycor + 5).type ||
+    0 == getTile(xcor + 5, ycor + 25).type;
+  }
+  
+  boolean intoAirRight() {
+    return 0 == getTile(xcor + 15, ycor + 5).type ||
+    0 == getTile(xcor + 15, ycor + 25).type;
   }
   
   boolean intoAirFeet() {
