@@ -8,8 +8,7 @@ Tile[] board;
 BufferedReader reader;
 Character mainChar;
 char currentKey;
-color buttonNormal;
-color buttonHover;
+color buttonNormal,buttonHover;
 PImage mainmenu, stagebg;
 Saw[] sawlist;
 Door[] doorlist = new Door[2];
@@ -89,9 +88,9 @@ void draw() {
         }
         for (int i = 0; i < doorlist.length; i ++) {
           doorlist[i].draw();
-          if (doorlist[i].insideDoor((int)mainChar.xcor, (int)mainChar.ycor) && doorlist[i].exit) {
-            setStage(state - 10 + 1);
+          if (i==1 && doorlist[i].insideDoor((int)mainChar.xcor, (int)mainChar.ycor)) {
             println("DOOR");
+            setStage(state - 10 + 1);
           }
         }
         mainChar.draw();

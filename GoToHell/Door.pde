@@ -15,11 +15,18 @@ class Door {
    else {
      fill(21, 20, 150);
    }
+   rectMode(CORNER);
    rect(xcor, ycor, 30, 40);
+   fill(0,255,200);
+   rect(xcor,ycor,1,1);
+ }
+ 
+ String toString(){
+   return ""+xcor+","+ycor;  
  }
  
  boolean insideDoor(int x, int y) {
-   return (x >= xcor && x <= xcor + 30 && y >= ycor && y <= xcor + 40) ||
-   (x + 20 >= xcor && x + 20 <= xcor + 30 && y + 30 >= ycor && y + 30 <= xcor + 40);
+   return (x >= xcor && x <= xcor + 30 && y >= ycor && y <= ycor + 40) ||
+   (x + 20 >= xcor && x + 20 <= xcor + 30 && y + 30 >= ycor && y + 30 <= ycor + 40);
  }
 }
