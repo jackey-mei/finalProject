@@ -223,11 +223,13 @@ class Character {
         }
       }
     }
-    if (intoWallL() || intoPlatL()) {
+    if (intoWallL() || intoPlatBreakL()) {
       //println("Colliding With Left Wall");
       if (!intoFloor()) {
         yvelocity += -abs(xvelocity / 4);
-        wallClimbL = true;
+        if (intoWallL() && !intoPlatBreakR()) {
+          wallClimbL = true;
+        }
       }
       if (xvelocity < 0) {
         xvelocity = 0;
@@ -240,11 +242,13 @@ class Character {
     else {
       wallClimbL = false;
     }
-    if (intoWallR() || intoPlatR()) {
+    if (intoWallR() || intoPlatBreakR()) {
       //println("Colliding With Right Wall");
       if (!intoFloor()) {
         yvelocity += -abs(xvelocity / 4);
-        wallClimbR = true;
+        if (intoWallR() && !intoPlatBreakR()) {
+          wallClimbR = true;
+        }
       }
       if (xvelocity > 0) {
         xvelocity = 0;
@@ -322,30 +326,40 @@ class Character {
   }
 
   boolean intoFloor() {
+    getTile(xcor + 5, ycor + 30).contact = true;
+    getTile(xcor + 15, ycor + 30).contact = true;
     return 1 == getTile(xcor + 5, ycor + 30).type || 
     1 == getTile(xcor + 15, ycor + 30).type ||
     3 == getTile(xcor + 5, ycor + 30).type || 
-    3 == getTile(xcor + 15, ycor + 30).type;
+    3 == getTile(xcor + 15, ycor + 30).type;    
   }
 
   boolean intoWallL() {
+    getTile(xcor - 1, ycor + 5).contact = true;
+    getTile(xcor - 1, ycor + 25).contact = true;
     return 2 == getTile(xcor - 1, ycor + 5).type || //-1, 1
     2 == getTile(xcor - 1, ycor + 25).type; //-1, 22
   }
   
   boolean intoWallR() {
+    getTile(xcor + 20, ycor + 5).contact = true;
+    getTile(xcor + 20, ycor + 25).contact = true;
     return 2 == getTile(xcor + 20, ycor + 5).type || //21, 1
     2 == getTile(xcor + 20, ycor + 25).type; //21, 22
   }
   
-  boolean intoPlatL() {
+  boolean intoPlatBreakL() {
+    getTile(xcor - 1, ycor + 5).contact = true;
+    getTile(xcor - 1, ycor + 25).contact = true;
     return 1 == getTile(xcor - 1, ycor + 5).type || //-1, 1
     1 == getTile(xcor - 1, ycor + 25).type || //-1, 22
     3 == getTile(xcor - 1, ycor + 5).type || 
     3 == getTile(xcor - 1, ycor + 25).type;
   }
   
-  boolean intoPlatR() {
+  boolean intoPlatBreakR() {
+    getTile(xcor + 20, ycor + 5).contact = true;
+    getTile(xcor + 20, ycor + 25).contact = true;
     return 1 == getTile(xcor + 20, ycor + 5).type || //21, 1
     1 == getTile(xcor + 20, ycor + 25).type || //21, 22
     3 == getTile(xcor + 20, ycor + 5).type || 
@@ -353,11 +367,15 @@ class Character {
   }
   
   boolean intoCeiling() {
+    getTile(xcor + 5, ycor - 1).contact = true;
+    getTile(xcor + 15, ycor - 1).contact = true;
     return 0 != getTile(xcor + 5, ycor - 1).type ||
     0 != getTile(xcor + 15, ycor - 1).type;
   }
   
   boolean intoDeath() {
+    getTile(xcor + 5, ycor + 25).contact = true;
+    getTile(xcor + 15, ycor + 25).contact = true;
     for(int i=0;i<sawlist.length;i++){
       if (sawlist[i].insideSaw(xcor,ycor)){
        return true; 

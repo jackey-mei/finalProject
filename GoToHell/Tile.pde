@@ -1,12 +1,13 @@
 class Tile {
- int xcor, ycor;
+ int xcor, ycor, breakStart;
  int type; // 0 = air; 1 = platform; 2 = wall; 3 = breakable; 4 = damage;
- boolean over;
+ boolean over, contact;
  color col;
 
  Tile(int x, int y, int type) {
    xcor = x;
    ycor = y;
+   contact = false;
    this.type = type;
  }
  
@@ -22,6 +23,12 @@ class Tile {
      }
      else if (type == 3) {
        col = color(25, 120, 85);
+       if (contact == true) {
+         breakStart = millis();
+         if ((millis() - breakStart) / 1000.0 >= 2) {
+           type = 0;
+         }
+       }
      }
      else if (type == 4) {
        col = color(5, 180, 85);

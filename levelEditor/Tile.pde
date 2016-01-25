@@ -1,12 +1,13 @@
 class Tile {
  int xcor, ycor;
  int type; //0 = air; 1 = platform; 2 = wall; 3 = breakable; 4 = damage;
- boolean over;
+ boolean over, contact;
  color col;
 
  Tile(int x, int y, int type) {
    xcor = x;
    ycor = y;
+   contact = false;
    this.type = type;
  }
  
