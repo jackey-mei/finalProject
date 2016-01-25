@@ -154,7 +154,7 @@ class Character {
         }
       }
       if (intoWallL()) {
-        println("Colliding With Left Wall");
+       // println("Colliding With Left Wall");
         if (!intoFloor()) {
           yvelocity += -abs(xvelocity / 4);
           wallClimbL = true;
@@ -187,8 +187,14 @@ class Character {
       else {
         wallClimbR = false;
       }
+      if (intoPlatL()) {
+        xcor += 1;
+      }
+      if (intoPlatR()) {
+        xcor -= 1;
+      }
       if (intoCeiling()) {
-        println("Colliding With Ceiling");
+        //println("Colliding With Ceiling");
         if (yvelocity < 0) {
           yvelocity = 0;
         }
@@ -197,7 +203,7 @@ class Character {
         }
       }
       if (intoFloor()) {
-        //println("Colliding With Floor");
+        println("Colliding With Floor");
         if (yvelocity > 0) {
           yvelocity = 0;
           yacceleration = 0;
@@ -258,6 +264,16 @@ class Character {
   boolean intoWallR() {
     return 2 == getTile(xcor + 20, ycor + 5).type || //21, 1
     2 == getTile(xcor + 20, ycor + 25).type; //21, 22
+  }
+  
+  boolean intoPlatL() {
+    return 1 == getTile(xcor - 1, ycor + 5).type || //-1, 1
+    1 == getTile(xcor - 1, ycor + 25).type; //-1, 22
+  }
+  
+  boolean intoPlatR() {
+    return 1 == getTile(xcor + 20, ycor + 5).type || //21, 1
+    1 == getTile(xcor + 20, ycor + 25).type; //21, 22
   }
   
   boolean intoCeiling() {
