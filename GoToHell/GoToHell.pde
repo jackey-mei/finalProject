@@ -6,7 +6,7 @@ txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
 txtButton[] butts3 = new txtButton[2];
 Tile[] board;
-BufferedReader reader;
+BufferedReader reader,reader2;
 PrintWriter out;
 Character mainChar;
 char currentKey;
@@ -15,9 +15,11 @@ PImage mainmenu, stagebg;
 Saw[] sawlist;
 Door[] doorlist = new Door[2];
 Timer timer;
+float[] records = new float[10];
 
 void setup() {
   reader = createReader("save.txt");
+  reader2 = createReader("records.txt");
   load();
   size(640, 480);
   //size(1280, 960);
@@ -86,6 +88,21 @@ void draw() {
     fill(255);
     line(width / 10, height - height / 10, 0, 0);
   } 
+  else if (state == 2){
+    background(190, 80, 40);
+    fill(buttonHover);
+    textFont(font, 36);
+    textAlign(CENTER, BOTTOM);
+    text("Records", width / 2, height / 5);
+    for (int i=0;i<10;i++){
+      fill(buttonNormal);
+      textFont(font, 18);
+      text("Stage"+(i+1)+":",width/3,height*(i+1)/17+110);
+      fill(200);
+      text(records[i]+" sec",width*2/3-20,height*(i+1)/17+110);
+    }
+    butts1[0].draw();
+  }
   else if (state == 3) {
     fill(255);
     textSize(100);
@@ -178,7 +195,7 @@ void mousePressed() {
   else if (state == 1) {
     if (butts1[0].over == true) {
       state = 0; 
-      println("Back");
+      //println("Back");
     } 
     else {
       for (int n = 1; n < butts1.length; n ++) {
@@ -187,6 +204,11 @@ void mousePressed() {
         }
       }
     }
+  }else if (state == 2){
+    if (butts1[0].over == true) {
+      state = 0; 
+      //println("Back");
+    } 
   }else if (state == 3) {
     if(butts3[0].over == true){
       state = beforePause;
@@ -243,6 +265,10 @@ void load(){
     String line = reader.readLine();
     if(!line.isEmpty()){
       unlockedStage = Integer.parseInt(line);
+    }
+    String[] lines = loadStrings("records.txt");
+    for (int i= 0;i<10;i++){
+      records[i] = Float.parseFloat(lines[i]);
     }
   }catch(IOException e){
     e.printStackTrace();
