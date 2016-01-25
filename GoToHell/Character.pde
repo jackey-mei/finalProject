@@ -99,7 +99,7 @@ class Character {
           hasJumped = true;
         }
       }
-      if (key == 'z') {
+      if (keyCode == SHIFT) {
         sprint = true;
       }
     }
