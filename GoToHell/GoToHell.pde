@@ -31,7 +31,7 @@ void setup() {
   background(190, 80, 40);
   noStroke();
   mainmenu = loadImage("mainmenu.png");
-  font = createFont("Arial-Black", 16, true);
+  font = createFont("Impact", 16, true);
   butts0[0] = new txtButton(width / 5, height / 3 + 10 * height / 48, "Play", fontsize, buttonNormal, buttonHover);
   butts0[1] = new txtButton(width / 5, height / 3 + 15 * height / 48, "Records", fontsize, buttonNormal, buttonHover);
   butts0[2] = new txtButton(width / 5, height / 3 + 20 * height / 48, "Exit", fontsize, buttonNormal, buttonHover);

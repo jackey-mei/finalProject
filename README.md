@@ -68,3 +68,14 @@ Jackey
 Changed movement keys to SPACEBAR, ARROW KEYS<br>
 Added sprinting<br>
 Fixed wall-climbing bugs when colliding with ceilings
+
+<b>1/25/16</b>
+Wendy
+Drew new character sprite
+Added update unlocked stage in-game
+Added sprite left and right switching
+Side collision with breakable
+Saws now working
+Disabled Esc for quitting in the menus
+
+Jackey
