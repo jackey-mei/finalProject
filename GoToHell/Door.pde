@@ -22,7 +22,7 @@ class Door {
  }
  
  String toString(){
-   return ""+xcor+","+ycor;  
+   return "" + xcor + "," + ycor;  
  }
  
  boolean insideDoor(int x, int y) {

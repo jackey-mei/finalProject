@@ -15,6 +15,6 @@ class Timer {
  }
  
  float result() {
-  return (end - start) / 1000.0;
+   return (end - start) / 1000.0;
  }
 }

@@ -59,7 +59,7 @@ class Character {
     }
     if (keyPressed) {
       if (!intoWallL()) {
-        if (key == 's') {
+        if (keyCode == LEFT) {
           println("MOVING LEFT");
           movingLeft = true;
           keyPriorityLeft = true;
@@ -70,7 +70,7 @@ class Character {
         }
       }
       if (!intoWallR()) {
-        if (key == 'f') {
+        if (keyCode == RIGHT) {
           println("MOVING RIGHT");
           movingRight = true;
           keyPriorityLeft = false;
@@ -81,7 +81,7 @@ class Character {
         }
       }
       if (!intoCeiling()) {
-        if (key == ' ') {
+        if (keyCode == UP) {
           if (!hasJumped) {
             if (isFalling == false) {
               yvelocity = -speedlimit - 1;
@@ -99,7 +99,7 @@ class Character {
           hasJumped = true;
         }
       }
-      if (key == 'z') {
+      if (key == ' ') {
         sprint = true;
       }
     }
@@ -260,6 +260,10 @@ class Character {
         ycor += 1;
       }
     }
+    if (intoDeath()) {
+      timer.begin();
+      mainChar = new Character(0, 0, 0, 0, doorlist[0].xcor + 5, doorlist[0].ycor + 10);
+    }
     if (intoFloor()) {
       //println("Colliding With Floor");
       if (yvelocity > 0) {
@@ -341,5 +345,12 @@ class Character {
   boolean intoCeiling() {
     return 0 != getTile(xcor + 5, ycor - 1).type ||
     0 != getTile(xcor + 15, ycor - 1).type;
+  }
+  
+  boolean intoDeath() {
+    return 4 == getTile(xcor + 5, ycor + 25).type || 
+    4 == getTile(xcor + 15, ycor + 25).type ||
+    4 == getTile(xcor + 5, ycor + 5).type || //-1, 1
+    4 == getTile(xcor + 15, ycor + 5).type; //21, 1
   }
 }

@@ -88,7 +88,7 @@ void draw() {
         }
         for (int i = 0; i < doorlist.length; i ++) {
           doorlist[i].draw();
-          if (i==1 && doorlist[i].insideDoor((int)mainChar.xcor, (int)mainChar.ycor)) {
+          if (i == 1 && doorlist[i].insideDoor((int)mainChar.xcor, (int)mainChar.ycor)) {
             println("DOOR");
             setStage(state - 10 + 1);
           }
@@ -113,22 +113,22 @@ void draw() {
 }
 
 void keyReleased() {
-  if (key == 'f') {
+  if (keyCode == RIGHT) {
     mainChar.xacceleration = -0.2;
     mainChar.xrightSlowDown = true;
     mainChar.movingRight = false;
     mainChar.keyPriorityRight = false;
   }
-  if (key == 's') {
+  if (keyCode == LEFT) {
     mainChar.xacceleration = 0.2;
     mainChar.xleftSlowDown = true;
     mainChar.movingLeft = false;
     mainChar.keyPriorityLeft = false;
   }
-  if (key == ' ') {
+  if (keyCode == UP) {
     mainChar.hasJumped = false;
   }
-  if (keyCode == SHIFT) {
+  if (key == ' ') {
     mainChar.sprint = false;
   }
 }
@@ -165,7 +165,7 @@ void mousePressed() {
       println("Back");
     } 
     else {
-      for (int n = 1; n < butts1.length; n++) {
+      for (int n = 1; n < butts1.length; n ++) {
         if (butts1[n].over == true) {
           setStage(n);
         }
