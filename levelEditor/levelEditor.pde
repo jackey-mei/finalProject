@@ -2,19 +2,21 @@
 //Press z to toggle big brush mode
 //Press x to place saws
 
-static int current, tileSize; 
 int stage = 1; 
+boolean load = true;
+static int current, tileSize; 
 boolean bigBrush = false; 
 boolean sawmode = false; 
 boolean doormode1 = false; 
 boolean doormode2 = false; 
 Tile[] board; 
 Tile hovered; 
-ArrayList <Saw> sawlist = new ArrayList <Saw>(); 
-ArrayList <Door> doorlist = new ArrayList <Door>(2); 
-PrintWriter out; 
+ArrayList <Saw> sawlist; 
+ArrayList <Door> doorlist; 
+PrintWriter out;
 Saw ghostSaw; 
-Door ghostDoor; 
+Door ghostDoor;
+String[] lines;
 
 void setup() {
   size(640, 480); 
@@ -26,15 +28,21 @@ void setup() {
       board[row * 64 + col] = new Tile(col, row, 1); 
     }
   }
-  out = createWriter("stage" + stage + ".txt"); 
+  if(load){
+    lines = loadStrings("stage" + stage + ".txt");
+    sawlist = new ArrayList <Saw>(lines.length - (board.length + 4));
+    doorlist = new ArrayList <Door>();
+    load();
+  }
   ghostSaw = new Saw(mouseX, mouseY, 10, 10); 
-  ghostDoor = new Door(mouseX, mouseY, false); 
+  ghostDoor = new Door(mouseX, mouseY, false);
 }
 
 void draw() {
   background(0); 
   colorMode(HSB); 
-  noStroke(); 
+  noStroke();
+  
   for (int i = 0; i < board.length; i ++) {
     board[i].draw(); 
   }
@@ -148,6 +156,7 @@ void keyPressed() {
     ghostDoor.exit = true; 
   }
   else if (key == 's') {
+    out = createWriter("stage" + stage + ".txt");
     for (int i = 0; i < board.length; i ++) {
       out.println(board[i].xcor + "," + board[i].ycor + "," + board[i].type); 
     }
@@ -164,4 +173,22 @@ void keyPressed() {
     println("File saved"); 
   }
   println(msg); 
+}
+
+void load(){
+    String[] tileInfo;
+    for (int i = 0; i < board.length; i ++) {
+      tileInfo = lines[i].split(",");
+      board[i] = new Tile(Integer.parseInt(tileInfo[0]), Integer.parseInt(tileInfo[1]), Integer.parseInt(tileInfo[2]));
+    }
+    String[] door = lines[board.length + 1].split(",");
+    doorlist.add(0, new Door(Integer.parseInt(door[0]), Integer.parseInt(door[1]), false));
+    door = lines[board.length + 2].split(",");
+    doorlist.add(1, new Door(Integer.parseInt(door[0]), Integer.parseInt(door[1]), true));
+    String[] saw;
+    for (int i = 0; i < lines.length - (board.length + 4); i ++) {
+      saw = lines[board.length + 4 + i].split(",");
+      sawlist.add(i, new Saw(Integer.parseInt(saw[0]), Integer.parseInt(saw[1]), Integer.parseInt(saw[2]), Integer.parseInt(saw[3])));
+      
+    }
 }
