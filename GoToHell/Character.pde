@@ -99,7 +99,7 @@ class Character {
           hasJumped = true;
         }
       }
-      if (keyCode == SHIFT) {
+      if (key == 'z') {
         sprint = true;
       }
     }
@@ -217,7 +217,7 @@ class Character {
         }
       }
     }
-    if (intoWallL()) {
+    if (intoWallL() || intoPlatL()) {
       //println("Colliding With Left Wall");
       if (!intoFloor()) {
         yvelocity += -abs(xvelocity / 4);
@@ -234,7 +234,7 @@ class Character {
     else {
       wallClimbL = false;
     }
-    if (intoWallR()) {
+    if (intoWallR() || intoPlatR()) {
       //println("Colliding With Right Wall");
       if (!intoFloor()) {
         yvelocity += -abs(xvelocity / 4);
@@ -250,12 +250,6 @@ class Character {
     }
     else {
       wallClimbR = false;
-    }
-    if (intoPlatL()) {
-      xcor += 1;
-    }
-    if (intoPlatR()) {
-      xcor -= 1;
     }
     if (intoCeiling()) {
       //println("Colliding With Ceiling");

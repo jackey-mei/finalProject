@@ -113,7 +113,7 @@ void draw() {
 }
 
 void keyReleased() {
-  if (key == 'a') {
+  if (key == 'f') {
     mainChar.xacceleration = -0.2;
     mainChar.xrightSlowDown = true;
     mainChar.movingRight = false;
