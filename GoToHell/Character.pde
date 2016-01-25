@@ -58,9 +58,12 @@ class Character {
       }
     }
     if (keyPressed) {
+      if (keyCode == LEFT) {
+        sprite = loadImage("charspriteL.png");
+      }
       if (!intoWallL()) {
         if (keyCode == LEFT) {
-          println("MOVING LEFT");
+          //println("MOVING LEFT");
           movingLeft = true;
           keyPriorityLeft = true;
           keyPriorityRight = false;
@@ -69,9 +72,12 @@ class Character {
           }
         }
       }
+      if (keyCode == RIGHT) {
+        sprite = loadImage("charspriteR.png");
+      }
       if (!intoWallR()) {
         if (keyCode == RIGHT) {
-          println("MOVING RIGHT");
+          //println("MOVING RIGHT");
           movingRight = true;
           keyPriorityLeft = false;
           keyPriorityRight = true;
@@ -334,12 +340,16 @@ class Character {
   
   boolean intoPlatL() {
     return 1 == getTile(xcor - 1, ycor + 5).type || //-1, 1
-    1 == getTile(xcor - 1, ycor + 25).type; //-1, 22
+    1 == getTile(xcor - 1, ycor + 25).type || //-1, 22
+    3 == getTile(xcor - 1, ycor + 5).type || 
+    3 == getTile(xcor - 1, ycor + 25).type;
   }
   
   boolean intoPlatR() {
     return 1 == getTile(xcor + 20, ycor + 5).type || //21, 1
-    1 == getTile(xcor + 20, ycor + 25).type; //21, 22
+    1 == getTile(xcor + 20, ycor + 25).type || //21, 22
+    3 == getTile(xcor + 20, ycor + 5).type || 
+    3 == getTile(xcor + 20, ycor + 25).type;
   }
   
   boolean intoCeiling() {
@@ -348,6 +358,11 @@ class Character {
   }
   
   boolean intoDeath() {
+    for(int i=0;i<sawlist.length;i++){
+      if (sawlist[i].insideSaw(xcor,ycor)){
+       return true; 
+      }
+    }
     return 4 == getTile(xcor + 5, ycor + 25).type || 
     4 == getTile(xcor + 15, ycor + 25).type ||
     4 == getTile(xcor + 5, ycor + 5).type || //-1, 1

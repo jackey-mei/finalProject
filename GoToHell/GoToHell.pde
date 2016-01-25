@@ -171,13 +171,15 @@ void keyReleased() {
 
 void keyPressed() {
   if (key == 27 && state < 21 && state > 10) {
-    key = 0;
+    key=0;
     beforePause = state;
     state = 3;
   }
   else if (key == 27 && state == 3) {
-    key = 0;
+    key=0;
     state = beforePause;
+  }else if(key==27){
+    key=0;
   }
 }
  
@@ -238,8 +240,10 @@ void setStage(int n) {
       out = createWriter("save.txt");
       out.print(n+"");
       out.flush(); 
-      out.close(); 
-      println("New save"); 
+      out.close();
+      butts1[n].nColor = buttonNormal;
+      butts1[n].overColor = buttonHover;
+      //println("New save"); 
     }
     println("Stage " + n);
     String[] lines = loadStrings("stage" + n + ".txt");
