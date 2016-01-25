@@ -1,12 +1,13 @@
 static int state, tileSize; //  0 = Main Menu; 1 = Play / Stage Select; 2 = Stat Record; 3 = Pause;
                             // 11 - 20 = stages 1 - 10
 PFont font;
-int fontsize = 20, beforePause;
+int fontsize = 20, beforePause,unlockedStage;
 txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
 txtButton[] butts3 = new txtButton[2];
 Tile[] board;
 BufferedReader reader;
+PrintWriter out;
 Character mainChar;
 char currentKey;
 color buttonNormal, buttonHover;
@@ -47,6 +48,8 @@ void setup() {
   butts3[1] = new txtButton(width*2 / 4+30, 330, "Exit", fontsize, buttonNormal, buttonHover);
   board = new Tile[64 * 48];
   timer = new Timer();
+  reader = createReader("save.txt");
+  load();
 }
 
 void draw() {
@@ -110,9 +113,6 @@ void draw() {
         text("" + timer.result(), 25, 35);
       }
       //println(key);
-      else if (state == 21) {
-        state = 1;
-      }
     }
   }
 }
@@ -195,6 +195,14 @@ Tile getTile(float x, float y) {
 void setStage(int n) {
   state = 10 + n;
   if (state != 21) {
+    if (unlockedStage<10+n){
+      unlockedStage=10+n;
+      out = createWriter("save.txt");
+      out.print(10+n+"");
+      out.flush(); 
+      out.close(); 
+      println("New save"); 
+    }
     println("Stage " + n);
     String[] lines = loadStrings("stage" + n + ".txt");
     String[] tileInfo;
@@ -214,5 +222,18 @@ void setStage(int n) {
     }
     mainChar = new Character(0, 0, 0, 0, doorlist[0].xcor + 5, doorlist[0].ycor + 10);
     timer.begin();
+  }else if(state==21){
+    state = 1;
+  }
+}
+
+void load(){
+  try{
+    String line = reader.readLine();
+    if(!line.isEmpty()){
+      unlockedStage = Integer.parseInt(line);
+    }
+  }catch(IOException e){
+    e.printStackTrace();
   }
 }
