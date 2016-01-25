@@ -56,11 +56,12 @@ Fixed acceleration bugs
 
 <b>1/24/16</b>
 Wendy
-Added pause menu buttons
+Added 3 pause menu buttons
 Added loading feature to levelEditor
 Fixed Door detection bug
 Helped debug code
 Added level loading and saving
+Added records loading and saving
 
 Jackey
 

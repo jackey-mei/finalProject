@@ -4,7 +4,7 @@ PFont font;
 int fontsize = 20, beforePause,unlockedStage;
 txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
-txtButton[] butts3 = new txtButton[2];
+txtButton[] butts3 = new txtButton[3];
 Tile[] board;
 BufferedReader reader,reader2;
 PrintWriter out;
@@ -59,8 +59,9 @@ void setup() {
       }
     }
   }
-  butts3[0] = new txtButton(width / 4+30, 330, "Resume", fontsize, buttonNormal, buttonHover);
-  butts3[1] = new txtButton(width*2 / 4+30, 330, "Exit", fontsize, buttonNormal, buttonHover);
+  butts3[0] = new txtButton(width / 5+40, 330, "Resume", fontsize, buttonNormal, buttonHover);
+  butts3[1] = new txtButton(width/ 5+170, 330, "Back", fontsize, buttonNormal, buttonHover);
+  butts3[2] = new txtButton(width/ 5+270, 330, "Exit", fontsize, buttonNormal, buttonHover);
   board = new Tile[64 * 48];
   timer = new Timer();
 }
@@ -109,6 +110,7 @@ void draw() {
     text("PAUSE", 120, 290);
     butts3[0].draw();
     butts3[1].draw();
+    butts3[2].draw();
   }
   else if (state > 10 && state < 21) {
     background(190, 80, 40);
@@ -125,7 +127,8 @@ void draw() {
         for (int i = 0; i < doorlist.length; i ++) {
           doorlist[i].draw();
           if (i == 1 && doorlist[i].insideDoor((int)mainChar.xcor, (int)mainChar.ycor)) {
-            println("DOOR");
+            updateRecords(timer.result());
+            //println("DOOR");
             setStage(state - 10 + 1);
           }
         }
@@ -213,6 +216,8 @@ void mousePressed() {
     if(butts3[0].over == true){
       state = beforePause;
     }else if(butts3[1].over == true){
+      state = 1;
+    }else if(butts3[2].over == true){
       exit();
     }
   }
@@ -272,5 +277,17 @@ void load(){
     }
   }catch(IOException e){
     e.printStackTrace();
+  }
+}
+
+void updateRecords(float n){
+  if(n<records[state-11] || records[state-11]==0.0){
+    records[state-11]=n;
+    out = createWriter("records.txt");
+    for (int i=0;i<10;i++){
+      out.println(records[i]+"");
+    }
+    out.flush(); 
+    out.close(); 
   }
 }
