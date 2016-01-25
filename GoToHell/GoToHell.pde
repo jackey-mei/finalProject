@@ -17,6 +17,8 @@ Door[] doorlist = new Door[2];
 Timer timer;
 
 void setup() {
+  reader = createReader("save.txt");
+  load();
   size(640, 480);
   //size(1280, 960);
   tileSize = width / 64;
@@ -34,22 +36,31 @@ void setup() {
   butts1[0] = new txtButton(width / 10, height - height / 10, "Back", fontsize, buttonNormal, buttonHover);
   for (int i = 1; i < butts1.length; i ++) {
     if (i < 10 && i != 5) {
-      // butts1[i] = new txtButton((i / 6) * i * width / 6, (i / 6) * height / 4, "0" + i, fontsize, buttonNormal, buttonHover);
-      butts1[i] = new txtButton(i % 5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, buttonNormal, buttonHover);
+      if(i>unlockedStage){
+        butts1[i] = new txtButton(i % 5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, color(170), color(170));
+      }else{
+        butts1[i] = new txtButton(i % 5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, buttonNormal, buttonHover);
+      }
     } 
     else if (i == 5) {
-      butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, buttonNormal, buttonHover);
+      if(i>unlockedStage){
+        butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, color(170), color(170));
+      }else{
+        butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, buttonNormal, buttonHover);
+      }
     } 
     else {
-      butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "" + i, fontsize, buttonNormal, buttonHover);
+      if(i>unlockedStage){
+        butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "" + i, fontsize, color(170), color(170));
+      }else{
+        butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "" + i, fontsize, buttonNormal, buttonHover);
+      }
     }
   }
   butts3[0] = new txtButton(width / 4+30, 330, "Resume", fontsize, buttonNormal, buttonHover);
   butts3[1] = new txtButton(width*2 / 4+30, 330, "Exit", fontsize, buttonNormal, buttonHover);
   board = new Tile[64 * 48];
   timer = new Timer();
-  reader = createReader("save.txt");
-  load();
 }
 
 void draw() {
@@ -171,7 +182,7 @@ void mousePressed() {
     } 
     else {
       for (int n = 1; n < butts1.length; n ++) {
-        if (butts1[n].over == true) {
+        if (unlockedStage>=n && butts1[n].over == true) {
           setStage(n);
         }
       }
@@ -195,10 +206,10 @@ Tile getTile(float x, float y) {
 void setStage(int n) {
   state = 10 + n;
   if (state != 21) {
-    if (unlockedStage<10+n){
-      unlockedStage=10+n;
+    if (unlockedStage<n){
+      unlockedStage=n;
       out = createWriter("save.txt");
-      out.print(10+n+"");
+      out.print(n+"");
       out.flush(); 
       out.close(); 
       println("New save"); 
