@@ -8,7 +8,7 @@ Tile[] board;
 BufferedReader reader;
 Character mainChar;
 char currentKey;
-color buttonNormal,buttonHover;
+color buttonNormal, buttonHover;
 PImage mainmenu, stagebg;
 Saw[] sawlist;
 Door[] doorlist = new Door[2];
@@ -113,13 +113,13 @@ void draw() {
 }
 
 void keyReleased() {
-  if (key == 'd') {
-    mainChar.xacceleration = - 0.2;
+  if (key == 'a') {
+    mainChar.xacceleration = -0.2;
     mainChar.xrightSlowDown = true;
     mainChar.movingRight = false;
     mainChar.keyPriorityRight = false;
   }
-  if (key == 'a') {
+  if (key == 's') {
     mainChar.xacceleration = 0.2;
     mainChar.xleftSlowDown = true;
     mainChar.movingLeft = false;
@@ -127,6 +127,9 @@ void keyReleased() {
   }
   if (key == ' ') {
     mainChar.hasJumped = false;
+  }
+  if (keyCode == SHIFT) {
+    mainChar.sprint = false;
   }
 }
 

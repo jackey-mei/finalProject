@@ -1,6 +1,6 @@
 class Character {
-  float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor, gravity, speedlimit;
-  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling, hasJumped, movingLeft, movingRight, keyPriorityLeft, keyPriorityRight, wallClimbL, wallClimbR;
+  float xvelocity, xacceleration, yvelocity, yacceleration, xcor, ycor, gravity, speedlimit, newSpeedLimit;
+  boolean xleftSlowDown, xrightSlowDown, xstartUp, yslowDown, isFalling, hasJumped, movingLeft, movingRight, keyPriorityLeft, keyPriorityRight, wallClimbL, wallClimbR, sprint;
   //PShape square;
   PImage sprite = loadImage("charspriteR.png");
 
@@ -17,12 +17,14 @@ class Character {
     isFalling = false;
     hasJumped = false;
     speedlimit = 3.0;
+    newSpeedLimit = 4.0;
     movingLeft = false;
     movingRight = false;
     wallClimbL = false;
     wallClimbR = false;
     keyPriorityLeft = false;
     keyPriorityRight = false;
+    sprint = false;
     //square = createShape(RECT, 0, 0, 10, 10);
     //square.setFill(color(0, 100, 75));
     //square.setStroke(false);
@@ -57,7 +59,8 @@ class Character {
     }
     if (keyPressed) {
       if (!intoWallL()) {
-        if (key == 'a') {
+        if (key == 's') {
+          println("MOVING LEFT");
           movingLeft = true;
           keyPriorityLeft = true;
           keyPriorityRight = false;
@@ -67,7 +70,8 @@ class Character {
         }
       }
       if (!intoWallR()) {
-        if (key == 'd') {
+        if (key == 'f') {
+          println("MOVING RIGHT");
           movingRight = true;
           keyPriorityLeft = false;
           keyPriorityRight = true;
@@ -76,7 +80,7 @@ class Character {
           }
         }
       }
-      if (!intoCeiling())
+      if (!intoCeiling()) {
         if (key == ' ') {
           if (!hasJumped) {
             if (isFalling == false) {
@@ -95,23 +99,54 @@ class Character {
           hasJumped = true;
         }
       }
-      if (movingLeft && keyPriorityLeft) {
-        if (yvelocity == 0 && yacceleration == 0) {
+      if (key == 'z') {
+        sprint = true;
+      }
+    }
+    if (movingLeft && keyPriorityLeft) {
+      if (yvelocity == 0 && yacceleration == 0) {
+        if (sprint == true) {
+          if (xvelocity >= -newSpeedLimit) {
+            xacceleration = -0.3;
+            xstartUp = true;
+          }
+          else if (xvelocity < -newSpeedLimit) {
+            if (xstartUp == true) {
+              xacceleration = 0;
+              xstartUp = false;
+            }
+          }
+        }
+        else {
           if (xvelocity >= -speedlimit) {
             xacceleration = -0.2;
             xstartUp = true;
-          } 
+          }
           else if (xvelocity < -speedlimit) {
             if (xstartUp == true) {
               xacceleration = 0;
               xstartUp = false;
             }
           }
-        } 
-        else {
-          if (wallClimbR) {
-            wallClimbR = false;
+        }
+      }
+      else {
+        if (wallClimbR) {
+          wallClimbR = false;
+        }
+        if (sprint == true) {
+          if (xvelocity >= -newSpeedLimit) {
+            xacceleration = -0.20;
+            xstartUp = true;
+          } 
+          else if (xvelocity < -newSpeedLimit) {
+            if (xstartUp == true) {
+              xacceleration = 0;
+              xstartUp = false;
+            }
           }
+        }
+        else {  
           if (xvelocity >= -speedlimit) {
             xacceleration = -0.15;
             xstartUp = true;
@@ -124,13 +159,15 @@ class Character {
           }
         }
       }
-      if (movingRight && keyPriorityRight) {
-        if (yvelocity == 0 && yacceleration == 0) {
-          if (xvelocity <= speedlimit) {
-            xacceleration = 0.2;
+    }
+    if (movingRight && keyPriorityRight) {
+      if (yvelocity == 0 && yacceleration == 0) {
+        if (sprint == true) {
+          if (xvelocity <= newSpeedLimit) {
+            xacceleration = 0.3;
             xstartUp = true;
-          } 
-          else if (xvelocity > speedlimit) {
+          }
+          else if (xvelocity > newSpeedLimit) {
             if (xstartUp == true) {
               xacceleration = 0;
               xstartUp = false;
@@ -138,9 +175,35 @@ class Character {
           }
         }
         else {
-          if (wallClimbL) {
-            wallClimbL = false;
+          if (xvelocity <= speedlimit) {
+            xacceleration = 0.2;
+            xstartUp = true;
           }
+          else if (xvelocity > speedlimit) {
+            if (xstartUp == true) {
+              xacceleration = 0;
+              xstartUp = false;
+            }
+          }
+        }
+      }
+      else {
+        if (wallClimbL) {
+          wallClimbR = false;
+        }
+        if (sprint == true) {
+          if (xvelocity <= newSpeedLimit) {
+            xacceleration = 0.20;
+            xstartUp = true;
+          } 
+          else if (xvelocity > newSpeedLimit) {
+            if (xstartUp == true) {
+              xacceleration = 0;
+              xstartUp = false;
+            }
+          }
+        }
+        else {  
           if (xvelocity <= speedlimit) {
             xacceleration = 0.15;
             xstartUp = true;
@@ -153,80 +216,85 @@ class Character {
           }
         }
       }
-      if (intoWallL()) {
-       // println("Colliding With Left Wall");
-        if (!intoFloor()) {
-          yvelocity += -abs(xvelocity / 4);
-          wallClimbL = true;
-        }
-        if (xvelocity < 0) {
-          xvelocity = 0;
-          xacceleration = 0;
-        }
-        if (!intoAirLeft()) {
-          xcor += 1;
-        }
-      } 
-      else {
-        wallClimbL = false;
+    }
+    if (intoWallL()) {
+      //println("Colliding With Left Wall");
+      if (!intoFloor()) {
+        yvelocity += -abs(xvelocity / 4);
+        wallClimbL = true;
       }
-      if (intoWallR()) {
-        //println("Colliding With Right Wall");
-        if (!intoFloor()) {
-          yvelocity += -abs(xvelocity / 4);
-          wallClimbR = true;
-        }
-        if (xvelocity > 0) {
-          xvelocity = 0;
-          xacceleration = 0;
-        }
-        if (!intoAirRight()) {
-          xcor -= 1;
-        }
+      if (xvelocity < 0) {
+        xvelocity = 0;
+        xacceleration = 0;
       }
-      else {
-        wallClimbR = false;
-      }
-      if (intoPlatL()) {
+      if (!intoAirLeft()) {
         xcor += 1;
       }
-      if (intoPlatR()) {
+    } 
+    else {
+      wallClimbL = false;
+    }
+    if (intoWallR()) {
+      //println("Colliding With Right Wall");
+      if (!intoFloor()) {
+        yvelocity += -abs(xvelocity / 4);
+        wallClimbR = true;
+      }
+      if (xvelocity > 0) {
+        xvelocity = 0;
+        xacceleration = 0;
+      }
+      if (!intoAirRight()) {
         xcor -= 1;
       }
-      if (intoCeiling()) {
-        //println("Colliding With Ceiling");
-        if (yvelocity < 0) {
-          yvelocity = 0;
-        }
-        if (intoAirCeiling()) {
-          ycor += 1;
-        }
+    }
+    else {
+      wallClimbR = false;
+    }
+    if (intoPlatL()) {
+      xcor += 1;
+    }
+    if (intoPlatR()) {
+      xcor -= 1;
+    }
+    if (intoCeiling()) {
+      //println("Colliding With Ceiling");
+      if (yvelocity < 0) {
+        yvelocity = 0;
       }
-      if (intoFloor()) {
-        println("Colliding With Floor");
-        if (yvelocity > 0) {
-          yvelocity = 0;
-          yacceleration = 0;
-          isFalling = false;
-        }
-        if (!intoAirFeet()) {
-          ycor -= 1;
-        }
-        wallClimbR = false;
-        wallClimbL = false;
+      if (intoAirCeiling()) {
+        ycor += 1;
       }
-      else if (wallClimbR || wallClimbL) {
-        if (!yslowDown) {
-          yvelocity = 1;
-          yacceleration = 0;
-        }
+    }
+    if (intoFloor()) {
+      //println("Colliding With Floor");
+      if (yvelocity > 0) {
+        yvelocity = 0;
+        yacceleration = 0;
+        isFalling = false;
       }
-      else {
-        yacceleration = 0.15;
-        isFalling = true;
-        wallClimbL = false;
-        wallClimbR = false;
+      if (!intoAirFeet()) {
+        ycor -= 1;
       }
+      wallClimbR = false;
+      wallClimbL = false;
+    }
+    else if (wallClimbR || wallClimbL) {
+      if (!yslowDown) {
+        yvelocity = 1;
+        yacceleration = 0;
+      }
+    }
+    else {
+      yacceleration = 0.15;
+      isFalling = true;
+      wallClimbL = false;
+      wallClimbR = false;
+    }
+    if (yvelocity >= 2.5) {
+      yvelocity = 2.5;
+      yacceleration = 0;
+    }
   }
   
   boolean intoAirLeft() {
