@@ -60,6 +60,7 @@ Added pause menu buttons
 Added loading feature to levelEditor
 Fixed Door detection bug
 Helped debug code
+Added level loading and saving
 
 Jackey
 
