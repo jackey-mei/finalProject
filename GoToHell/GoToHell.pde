@@ -4,6 +4,7 @@ PFont font;
 int fontsize = 20, beforePause;
 txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
+txtButton[] butts3 = new txtButton[2];
 Tile[] board;
 BufferedReader reader;
 Character mainChar;
@@ -42,6 +43,8 @@ void setup() {
       butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "" + i, fontsize, buttonNormal, buttonHover);
     }
   }
+  butts3[0] = new txtButton(width / 4+30, 330, "Resume", fontsize, buttonNormal, buttonHover);
+  butts3[1] = new txtButton(width*2 / 4+30, 330, "Exit", fontsize, buttonNormal, buttonHover);
   board = new Tile[64 * 48];
   timer = new Timer();
 }
@@ -73,6 +76,8 @@ void draw() {
     fill(255);
     textSize(100);
     text("PAUSE", 120, 290);
+    butts3[0].draw();
+    butts3[1].draw();
   }
   else if (state > 10 && state < 21) {
     background(190, 80, 40);
@@ -170,6 +175,12 @@ void mousePressed() {
           setStage(n);
         }
       }
+    }
+  }else if (state == 3) {
+    if(butts3[0].over == true){
+      state = beforePause;
+    }else if(butts3[1].over == true){
+      exit();
     }
   }
 }
