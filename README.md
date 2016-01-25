@@ -44,3 +44,21 @@ Jackey
 
 Cleaned up syntax of code<br>
 Prevented minor glitches with certain walls
+
+<b>1/23/16</b>
+Wendy
+
+Jackey
+
+Cleaned up syntax<br>
+Added wall-climbing<br>
+Fixed acceleration bugs
+
+<b>1/24/16</b>
+Wendy
+
+Jackey
+
+Changed movement keys to SPACEBAR, ARROW KEYS<br>
+Added sprinting<br>
+Fixed wall-climbing bugs when colliding with ceilings
