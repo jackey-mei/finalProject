@@ -46,6 +46,7 @@ Cleaned up syntax of code<br>
 Prevented minor glitches with certain walls
 
 <b>1/23/16</b>
+
 Wendy
 
 Jackey
@@ -55,12 +56,14 @@ Added wall-climbing<br>
 Fixed acceleration bugs
 
 <b>1/24/16</b>
+
 Wendy
-Added 3 pause menu buttons
-Added loading feature to levelEditor
-Fixed Door detection bug
-Helped debug code
-Added level loading and saving
+
+Added 3 pause menu buttons <br>
+Added loading feature to levelEditor <br>
+Fixed Door detection bug <br>
+Helped debug code <br>
+Added level loading and saving <br>
 Added records loading and saving
 
 Jackey
@@ -70,12 +73,20 @@ Added sprinting<br>
 Fixed wall-climbing bugs when colliding with ceilings
 
 <b>1/25/16</b>
+
 Wendy
-Drew new character sprite
-Added update unlocked stage in-game
-Added sprite left and right switching
-Side collision with breakable
-Saws now working
+
+Drew new character sprite <br>
+Added update unlocked stage in-game <br>
+Added sprite left and right switching <br>
+Side collision with breakable <br>
+Saws now working <br>
 Disabled Esc for quitting in the menus
 
 Jackey
+
+Fixed death block detection bug <br>
+Added breakable block feature: destruction upon 2 seconds of contact <br>
+Aligned hitboxes for breakable blocks <br>
+Added auto-detect feature for loading in levelEditor <br>
+Fixed levelEditor bugs
