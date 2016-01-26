@@ -1,5 +1,8 @@
 # finalProject
 
+<b>Some say that hell is heaven for bad people.
+Embark on a journey as the mainChair to reach the depths of Hell's gates.</b>
+
 <b>1/19/16</b>
 
 Wendy
@@ -82,6 +85,8 @@ Added sprite left and right switching <br>
 Side collision with breakable <br>
 Saws now working <br>
 Disabled Esc for quitting in the menus
+Added saws graphics
+Designed final stages
 
 Jackey
 
