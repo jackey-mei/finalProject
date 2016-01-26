@@ -86,7 +86,7 @@ Side collision with breakable <br>
 Saws now working <br>
 Disabled Esc for quitting in the menus
 Added saws graphics
-Designed final stages
+Designed final stages and tested
 
 Jackey
 
