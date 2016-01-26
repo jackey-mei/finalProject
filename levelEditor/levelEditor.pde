@@ -3,7 +3,7 @@
 //Press x to place saws
 //set stage to the stage number you want to load
 
-int stage = 1; 
+int stage = 10; 
 boolean load = false;
 static int current, tileSize; 
 boolean bigBrush = false; 
@@ -29,6 +29,7 @@ void setup() {
       board[row * 64 + col] = new Tile(col, row, 1); 
     }
   }
+  if(load){
   try { 
     lines = loadStrings("stage" + stage + ".txt");
     sawlist = new ArrayList <Saw>(lines.length - (board.length + 4));
@@ -38,11 +39,14 @@ void setup() {
   }
   catch (Exception e) {
     println("stage" + stage + ".txt isn't found. Creating stage" + stage + ".txt");
+  }
+  }
     sawlist = new ArrayList <Saw>();
     doorlist = new ArrayList <Door>(2);
-  }
+  
   ghostSaw = new Saw(mouseX, mouseY, 10, 10); 
   ghostDoor = new Door(mouseX, mouseY, false);
+
 }
 
 void draw() {
