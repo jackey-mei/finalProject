@@ -1,5 +1,6 @@
 class Saw {
- int xcor, ycor, damage, rad; 
+ int xcor, ycor, damage, rad;
+ PImage img = loadImage("saw.png");
  
  Saw(int x, int y, int damage, int rad) {
    xcor = x;
@@ -9,8 +10,9 @@ class Saw {
  }
  
  void draw() {
-   fill(5, 180, 85);
-   ellipse(xcor, ycor, rad * 2, rad * 2);
+   //fill(5, 180, 85);
+   //ellipse(xcor, ycor, rad * 2, rad * 2);
+   image(img,xcor-rad, ycor-rad, rad * 2, rad * 2);
  }
  
  boolean insideSaw(float x, float y) {
