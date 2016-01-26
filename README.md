@@ -89,4 +89,5 @@ Fixed death block detection bug <br>
 Added breakable block feature: destruction upon 2 seconds of contact <br>
 Aligned hitboxes for breakable blocks <br>
 Added auto-detect feature for loading in levelEditor <br>
-Fixed levelEditor bugs
+Fixed levelEditor bugs <br>
+Resets stage if player dies

@@ -1,7 +1,7 @@
 class Tile {
  int xcor, ycor, breakStart;
  int type; // 0 = air; 1 = platform; 2 = wall; 3 = breakable; 4 = damage;
- boolean over, contact, countStart;
+ boolean over, contact, countStart, hasBroken;
  color col;
 
  Tile(int x, int y, int type) {
@@ -9,6 +9,7 @@ class Tile {
    ycor = y;
    contact = false;
    countStart = false;
+   hasBroken = false;
    this.type = type;
  }
  
@@ -27,6 +28,7 @@ class Tile {
      if (contact && !countStart) {
        breakStart = millis();
        countStart = true;
+       hasBroken = true;
      }
      if (contact && countStart) {
        if ((millis() - breakStart) / 1000.0 >= 2) {

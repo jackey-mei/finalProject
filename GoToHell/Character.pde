@@ -281,6 +281,14 @@ class Character {
     if (intoDeath()) {
       timer.begin();
       mainChar = new Character(0, 0, 0, 0, doorlist[0].xcor + 5, doorlist[0].ycor + 10);
+      for (int i = 0; i < board.length; i ++) {
+        if (board[i].hasBroken == true) {
+          board[i].hasBroken = false;
+          board[i].contact = false;
+          board[i].countStart = false;
+          board[i].type = 3;
+        }
+      }
     }
     if (intoFloor()) {
       //println("Colliding With Floor");

@@ -38,23 +38,23 @@ void setup() {
   butts1[0] = new txtButton(width / 10, height - height / 10, "Back", fontsize, buttonNormal, buttonHover);
   for (int i = 1; i < butts1.length; i ++) {
     if (i < 10 && i != 5) {
-      if(i>unlockedStage){
+      if(i > unlockedStage){
         butts1[i] = new txtButton(i % 5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, color(170), color(170));
       }else{
         butts1[i] = new txtButton(i % 5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, buttonNormal, buttonHover);
       }
     } 
     else if (i == 5) {
-      if(i>unlockedStage){
+      if(i > unlockedStage){
         butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, color(170), color(170));
       }else{
         butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, buttonNormal, buttonHover);
       }
     } 
     else {
-      if(i>unlockedStage){
+      if(i > unlockedStage){
         butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "" + i, fontsize, color(170), color(170));
-      }else{
+      }else {
         butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "" + i, fontsize, buttonNormal, buttonHover);
       }
     }
