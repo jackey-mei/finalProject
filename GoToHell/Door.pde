@@ -17,8 +17,8 @@ class Door {
    }
    rectMode(CORNER);
    rect(xcor, ycor, 30, 40);
-   fill(0,255,200);
-   rect(xcor,ycor,1,1);
+   fill(0, 255, 200);
+   rect(xcor, ycor, 1, 1);
  }
  
  String toString(){

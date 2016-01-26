@@ -1,10 +1,9 @@
 //Press numbers 0-4 to change tile type
 //Press z to toggle big brush mode
 //Press x to place saws
-//set stage to the stage number you want to load
+//Set stage to the stage number you want to load
 
-int stage = 10; 
-boolean load = false;
+int stage = 1; 
 static int current, tileSize; 
 boolean bigBrush = false; 
 boolean sawmode = false; 
@@ -29,7 +28,6 @@ void setup() {
       board[row * 64 + col] = new Tile(col, row, 1); 
     }
   }
-  if(load){
   try { 
     lines = loadStrings("stage" + stage + ".txt");
     sawlist = new ArrayList <Saw>(lines.length - (board.length + 4));
@@ -39,11 +37,9 @@ void setup() {
   }
   catch (Exception e) {
     println("stage" + stage + ".txt isn't found. Creating stage" + stage + ".txt");
-  }
-  }
     sawlist = new ArrayList <Saw>();
     doorlist = new ArrayList <Door>(2);
-  
+  }
   ghostSaw = new Saw(mouseX, mouseY, 10, 10); 
   ghostDoor = new Door(mouseX, mouseY, false);
 

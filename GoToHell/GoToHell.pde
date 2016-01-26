@@ -1,12 +1,12 @@
 static int state, tileSize; //  0 = Main Menu; 1 = Play / Stage Select; 2 = Stat Record; 3 = Pause;
                             // 11 - 20 = stages 1 - 10
 PFont font;
-int fontsize = 20, beforePause,unlockedStage;
+int fontsize = 20, beforePause, unlockedStage;
 txtButton[] butts0 = new txtButton[3];
 txtButton[] butts1 = new txtButton[11];
 txtButton[] butts3 = new txtButton[3];
 Tile[] board;
-BufferedReader reader,reader2;
+BufferedReader reader, reader2;
 PrintWriter out;
 Character mainChar;
 char currentKey;
@@ -22,7 +22,6 @@ void setup() {
   reader2 = createReader("records.txt");
   load();
   size(640, 480);
-  //size(1280, 960);
   tileSize = width / 64;
   colorMode(HSB);
   state = 0;
@@ -38,30 +37,30 @@ void setup() {
   butts1[0] = new txtButton(width / 10, height - height / 10, "Back", fontsize, buttonNormal, buttonHover);
   for (int i = 1; i < butts1.length; i ++) {
     if (i < 10 && i != 5) {
-      if(i > unlockedStage){
+      if (i > unlockedStage) {
         butts1[i] = new txtButton(i % 5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, color(170), color(170));
       }else{
         butts1[i] = new txtButton(i % 5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, buttonNormal, buttonHover);
       }
     } 
     else if (i == 5) {
-      if(i > unlockedStage){
+      if (i > unlockedStage) {
         butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, color(170), color(170));
       }else{
         butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "0" + i, fontsize, buttonNormal, buttonHover);
       }
     } 
     else {
-      if(i > unlockedStage){
+      if (i > unlockedStage) {
         butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "" + i, fontsize, color(170), color(170));
       }else {
         butts1[i] = new txtButton(5 * width / 6, ((i / 6) + 1) * height * 4 / 11, "" + i, fontsize, buttonNormal, buttonHover);
       }
     }
   }
-  butts3[0] = new txtButton(width / 5+40, 330, "Resume", fontsize, buttonNormal, buttonHover);
-  butts3[1] = new txtButton(width/ 5+170, 330, "Back", fontsize, buttonNormal, buttonHover);
-  butts3[2] = new txtButton(width/ 5+270, 330, "Exit", fontsize, buttonNormal, buttonHover);
+  butts3[0] = new txtButton(width / 5 + 40, 330, "Resume", fontsize, buttonNormal, buttonHover);
+  butts3[1] = new txtButton(width/ 5 + 170, 330, "Back", fontsize, buttonNormal, buttonHover);
+  butts3[2] = new txtButton(width/ 5 + 270, 330, "Exit", fontsize, buttonNormal, buttonHover);
   board = new Tile[64 * 48];
   timer = new Timer();
 }
@@ -89,18 +88,18 @@ void draw() {
     fill(255);
     line(width / 10, height - height / 10, 0, 0);
   } 
-  else if (state == 2){
+  else if (state == 2) {
     background(190, 80, 40);
     fill(buttonHover);
     textFont(font, 36);
     textAlign(CENTER, BOTTOM);
     text("Records", width / 2, height / 5);
-    for (int i=0;i<10;i++){
+    for (int i = 0; i < 10; i++) {
       fill(buttonNormal);
       textFont(font, 18);
-      text("Stage"+(i+1)+":",width/3,height*(i+1)/17+110);
+      text("Stage" + ( i + 1) + ":", width / 3, height * (i + 1) / 17 + 110);
       fill(200);
-      text(records[i]+" sec",width*2/3-20,height*(i+1)/17+110);
+      text(records[i] + " sec", width * 2 / 3 - 20, height * (i + 1) / 17 + 110);
     }
     butts1[0].draw();
   }
@@ -117,8 +116,6 @@ void draw() {
     for (int x = 0; x < 10; x ++) {
       if (state == 11 + x) {
         timer.end();
-        
-        //println(timer.result());
         stagebg = loadImage("stagebg" + (x + 1) + ".png");
         background(stagebg);
         for (int i = 0; i < board.length; i ++) {
@@ -128,22 +125,17 @@ void draw() {
           doorlist[i].draw();
           if (i == 1 && doorlist[i].insideDoor((int)mainChar.xcor, (int)mainChar.ycor)) {
             updateRecords(timer.result());
-            //println("DOOR");
             setStage(state - 10 + 1);
           }
         }
         mainChar.draw();
         for (int i = 0; i < sawlist.length; i ++) {
           sawlist[i].draw();
-          if (sawlist[i].insideSaw((int)mainChar.xcor, (int)mainChar.ycor)) {
-            // println("HURT!!");
-          }
         }
         textSize(15);
         fill(255);
         text("" + timer.result(), 25, 35);
       }
-      //println(key);
     }
   }
 }
@@ -171,15 +163,16 @@ void keyReleased() {
 
 void keyPressed() {
   if (key == 27 && state < 21 && state > 10) {
-    key=0;
+    key = 0;
     beforePause = state;
     state = 3;
   }
   else if (key == 27 && state == 3) {
-    key=0;
+    key = 0;
     state = beforePause;
-  }else if(key==27){
-    key=0;
+  }
+  else if (key == 27) {
+    key = 0;
   }
 }
  
@@ -200,26 +193,28 @@ void mousePressed() {
   else if (state == 1) {
     if (butts1[0].over == true) {
       state = 0; 
-      //println("Back");
     } 
     else {
       for (int n = 1; n < butts1.length; n ++) {
-        if (unlockedStage>=n && butts1[n].over == true) {
+        if (unlockedStage >= n && butts1[n].over == true) {
           setStage(n);
         }
       }
     }
-  }else if (state == 2){
+  }
+  else if (state == 2) {
     if (butts1[0].over == true) {
       state = 0; 
-      //println("Back");
     } 
-  }else if (state == 3) {
-    if(butts3[0].over == true){
+  }
+  else if (state == 3) {
+    if (butts3[0].over == true) {
       state = beforePause;
-    }else if(butts3[1].over == true){
+    }
+    else if (butts3[1].over == true) {
       state = 1;
-    }else if(butts3[2].over == true){
+    }
+    else if (butts3[2].over == true) {
       exit();
     }
   }
@@ -235,10 +230,10 @@ Tile getTile(float x, float y) {
 void setStage(int n) {
   state = 10 + n;
   if (state != 21) {
-    if (unlockedStage<n){
-      unlockedStage=n;
+    if (unlockedStage < n) {
+      unlockedStage = n;
       out = createWriter("save.txt");
-      out.print(n+"");
+      out.print(n + "");
       out.flush(); 
       out.close();
       butts1[n].nColor = buttonNormal;
@@ -264,32 +259,34 @@ void setStage(int n) {
     }
     mainChar = new Character(0, 0, 0, 0, doorlist[0].xcor + 5, doorlist[0].ycor + 10);
     timer.begin();
-  }else if(state==21){
+  }
+  else if (state == 21) {
     state = 1;
   }
 }
 
-void load(){
-  try{
+void load() {
+  try {
     String line = reader.readLine();
-    if(!line.isEmpty()){
+    if (!line.isEmpty()) {
       unlockedStage = Integer.parseInt(line);
     }
     String[] lines = loadStrings("records.txt");
-    for (int i= 0;i<10;i++){
+    for (int i = 0; i < 10; i ++) {
       records[i] = Float.parseFloat(lines[i]);
     }
-  }catch(IOException e){
+  }
+  catch(IOException e) {
     e.printStackTrace();
   }
 }
 
-void updateRecords(float n){
-  if(n<records[state-11] || records[state-11]==0.0){
-    records[state-11]=n;
+void updateRecords(float n) {
+  if (n < records[state - 11] || records[state - 11] == 0.0) {
+    records[state - 11] = n;
     out = createWriter("records.txt");
-    for (int i=0;i<10;i++){
-      out.println(records[i]+"");
+    for (int i = 0; i < 10; i ++) {
+      out.println(records[i] + "");
     }
     out.flush(); 
     out.close(); 
